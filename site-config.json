@@ -1,5 +1,5 @@
 {
-  "baseUrl": "https://your-orbit-waitlist.vercel.app",
+  "baseUrl": "https://orbit-waitlist-one.vercel.app",
   "joinPath": "/join",
   "name": "Orbit",
   "tagline": "Coming soon.",
