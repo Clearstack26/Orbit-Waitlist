@@ -3,7 +3,7 @@
   "short_name": "Orbit",
   "description": "Join the Orbit waitlist. Be first to know when we launch.",
   "start_url": "/join",
-  "display": "standalone",
+  "display": "browser",
   "background_color": "#04040f",
   "theme_color": "#04040f",
   "orientation": "portrait",

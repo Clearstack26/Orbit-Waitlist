@@ -32,11 +32,11 @@ try {
   const dataUrl = await QRCode.toDataURL(joinUrl, {
     width: 300,
     margin: 2,
-    errorCorrectionLevel: "H",
+    errorCorrectionLevel: "M",
     color: { dark: "#000000", light: "#ffffff" },
   });
   if (dataUrl.startsWith("data:image/png;base64,")) {
-    pass("QR generation", joinUrl);
+    pass("QR generation (URL, ecc M)", joinUrl);
   } else {
     fail("QR generation", "unexpected output");
   }
@@ -44,11 +44,17 @@ try {
   fail("QR generation", e.message);
 }
 
+if (!/^https:\/\//i.test(joinUrl)) {
+  fail("HTTPS URL", joinUrl);
+} else {
+  pass("HTTPS URL", joinUrl);
+}
+
 try {
   const res = await fetch(joinUrl, { redirect: "follow" });
   const html = await res.text();
-  if (res.ok && html.includes("waitlist-form")) {
-    pass("Join page", `${res.status} ${joinUrl}`);
+  if (res.ok && html.includes("waitlist-form") && html.includes("step-0")) {
+    pass("Join page (onboarding start)", `${res.status} ${joinUrl}`);
   } else {
     fail("Join page", `status ${res.status}, form missing`);
   }
