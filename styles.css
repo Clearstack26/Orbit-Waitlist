@@ -479,27 +479,39 @@ body::after {
   box-shadow: 0 0 24px rgba(34,211,238,0.28), 0 4px 16px rgba(0,0,0,0.35);
 }
 
-/* ─── Skip button ─── */
-.btn-skip {
+/* ─── Back button ─── */
+.btn-back {
   position: fixed;
   top: max(1rem, env(safe-area-inset-top, 0px));
-  right: max(1rem, env(safe-area-inset-right, 0px));
+  left: max(1rem, env(safe-area-inset-left, 0px));
   z-index: 20;
-  padding: 0.5rem 0.85rem;
-  font: 600 0.75rem/1 var(--font-body);
-  letter-spacing: 0.03em;
-  color: var(--ink);
-  background: rgba(255, 255, 255, 0.1);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  border-radius: 999px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.25rem;
+  height: 2.25rem;
+  color: var(--ink-muted);
+  background: rgba(255, 255, 255, 0.07);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 50%;
   cursor: pointer;
   -webkit-tap-highlight-color: transparent;
-  backdrop-filter: blur(8px);
-  transition: background 0.2s, transform 0.2s;
-  display: none;
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  transition: color 0.2s, background 0.2s, transform 0.2s, opacity 0.2s;
+  opacity: 0;
+  pointer-events: none;
 }
-.btn-skip.is-visible { display: block; }
-.btn-skip:hover { background: rgba(255, 255, 255, 0.16); transform: translateY(-1px); }
+.btn-back svg { width: 1rem; height: 1rem; }
+.btn-back.is-visible {
+  opacity: 1;
+  pointer-events: auto;
+}
+.btn-back:hover {
+  color: var(--ink);
+  background: rgba(255, 255, 255, 0.14);
+  transform: translateX(-2px);
+}
 
 /* ════════════════════════════════════════════
    PROBLEM SLIDE

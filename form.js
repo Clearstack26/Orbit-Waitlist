@@ -19,12 +19,15 @@
   var SUPABASE_ANON_KEY = "";
 
   var btnEnter  = document.getElementById("btn-enter");
+  var btnBack   = document.getElementById("btn-back");
   var btnSkip   = null; // removed from UI
   var form      = document.getElementById("waitlist-form");
   var btnSubmit = document.getElementById("btn-submit");
   var bannerEl  = document.getElementById("form-banner");
   var formState = document.getElementById("form-state");
   var footer    = document.querySelector(".page-footer");
+
+  var SS_KEY = "orbit_form";
 
   var nameInput    = document.getElementById("field-name");
   var emailInput   = document.getElementById("field-email");
@@ -99,6 +102,7 @@
       updateSkip();
       updateProgressDots();
       updateFooter();
+      updateBackBtn();
       scrollTop(dest);
 
       var first = dest.querySelector("button:not([tabindex='-1']), input, textarea");
@@ -117,10 +121,22 @@
     btnSkip.classList.toggle("is-visible", skippable);
   }
 
+  function updateBackBtn() {
+    if (!btnBack) return;
+    var visible = currentStep >= STEP_PROBLEM && currentStep <= STEP_FORM;
+    btnBack.classList.toggle("is-visible", visible);
+  }
+
   /* ── Wire up buttons ── */
 
   if (btnEnter) {
     btnEnter.addEventListener("click", function () { goTo(STEP_PROBLEM, "fwd"); });
+  }
+
+  if (btnBack) {
+    btnBack.addEventListener("click", function () {
+      if (currentStep > STEP_INTRO) goTo(currentStep - 1, "back");
+    });
   }
 
   if (btnSkip) {
@@ -238,11 +254,46 @@
     });
   }
 
+  /* ── sessionStorage: persist form fields across refreshes ── */
+  function saveFormState() {
+    try {
+      sessionStorage.setItem(SS_KEY, JSON.stringify({
+        name:    nameInput    ? nameInput.value    : "",
+        email:   emailInput   ? emailInput.value   : "",
+        pain:    painInput    ? painInput.value    : "",
+        feature: featureInput ? featureInput.value : "",
+      }));
+    } catch (e) {}
+  }
+
+  function restoreFormState() {
+    try {
+      var raw = sessionStorage.getItem(SS_KEY);
+      if (!raw) return;
+      var d = JSON.parse(raw);
+      if (nameInput    && d.name)    nameInput.value    = d.name;
+      if (emailInput   && d.email)   emailInput.value   = d.email;
+      if (painInput    && d.pain)    painInput.value    = d.pain;
+      if (featureInput && d.feature) featureInput.value = d.feature;
+    } catch (e) {}
+  }
+
+  function clearFormState() {
+    try { sessionStorage.removeItem(SS_KEY); } catch (e) {}
+  }
+
+  [nameInput, emailInput, painInput, featureInput].forEach(function (el) {
+    if (el) el.addEventListener("input", saveFormState);
+  });
+
+  restoreFormState();
+
   /* ── Bootstrap ── */
   buildProgressDots();
   updateSkip();
   updateProgressDots();
   updateFooter();
+  updateBackBtn();
 
   fetch("/site-config.json", { cache: "no-store" })
     .then(function (r) { return r.ok ? r.json() : null; })
@@ -287,7 +338,7 @@
 
         submitToSupabase(payload)
           .then(function (result) {
-            if (result.ok) { goTo(STEP_SUCCESS, "fwd"); return; }
+            if (result.ok) { clearFormState(); goTo(STEP_SUCCESS, "fwd"); return; }
 
             var isDupe =
               result.status === 409 ||
