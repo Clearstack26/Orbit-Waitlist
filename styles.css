@@ -1,7 +1,7 @@
 /* Orbit Waitlist — purple space theme */
 
 :root {
-  --bg: #04030a;
+  --bg: #06041a;
   --bg-card: rgba(255, 255, 255, 0.06);
   --ink: #ffffff;
   --ink-soft: rgba(255, 255, 255, 0.88);
@@ -46,7 +46,8 @@ body {
   color: var(--ink);
   background-color: var(--bg);
   background-image:
-    radial-gradient(ellipse 90% 45% at 50% 115%, rgba(100, 40, 200, 0.26) 0%, transparent 55%);
+    radial-gradient(ellipse 120% 55% at 50% 110%, rgba(120, 40, 220, 0.55) 0%, transparent 60%),
+    radial-gradient(ellipse 70% 40% at 50% 0%,   rgba(100, 30, 180, 0.22) 0%, transparent 55%);
   position: relative;
   overflow: hidden;
 }
@@ -69,7 +70,9 @@ body::after {
   z-index: 0;
   pointer-events: none;
   background:
-    radial-gradient(ellipse 65% 35% at 50% 105%, rgba(120, 50, 230, 0.14) 0%, transparent 50%);
+    radial-gradient(ellipse 80% 50% at 50% 100%, rgba(140, 60, 255, 0.32) 0%, transparent 55%),
+    radial-gradient(ellipse 50% 30% at 20% 50%,  rgba(100, 30, 180, 0.10) 0%, transparent 50%),
+    radial-gradient(ellipse 50% 30% at 80% 50%,  rgba(100, 30, 180, 0.10) 0%, transparent 50%);
 }
 
 /* ─── Step shell ─── */
@@ -1012,7 +1015,8 @@ body::after {
 body.page-qr {
   overflow: auto;
   background:
-    radial-gradient(ellipse 90% 45% at 50% 115%, rgba(100, 40, 200, 0.26) 0%, transparent 55%),
+    radial-gradient(ellipse 120% 55% at 50% 110%, rgba(120, 40, 220, 0.55) 0%, transparent 60%),
+    radial-gradient(ellipse 70% 40% at 50% 0%,   rgba(100, 30, 180, 0.22) 0%, transparent 55%),
     var(--bg);
 }
 
