@@ -997,10 +997,10 @@ body::after {
 }
 
 .success-logo {
-  height: clamp(3rem, 14vw, 4.5rem);
+  height: clamp(5.5rem, 22vw, 8rem);
   width: auto;
   object-fit: contain;
-  filter: drop-shadow(0 0 16px rgba(34, 211, 238, 0.4));
+  filter: drop-shadow(0 0 24px rgba(34, 211, 238, 0.5));
 }
 
 .success-title {

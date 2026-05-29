@@ -328,7 +328,13 @@
 
         submitToSupabase(payload)
           .then(function (result) {
-            if (result.ok) { clearFormState(); goTo(STEP_SUCCESS, "fwd"); return; }
+            if (result.ok) {
+              var nameEl = document.getElementById("success-name");
+              if (nameEl) nameEl.textContent = name.trim().split(" ")[0];
+              clearFormState();
+              goTo(STEP_SUCCESS, "fwd");
+              return;
+            }
 
             var isDupe =
               result.status === 409 ||
