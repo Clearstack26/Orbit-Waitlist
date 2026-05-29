@@ -19,7 +19,7 @@
   var SUPABASE_ANON_KEY = "";
 
   var btnEnter  = document.getElementById("btn-enter");
-  var btnSkip   = document.getElementById("btn-skip");
+  var btnSkip   = null; // removed from UI
   var form      = document.getElementById("waitlist-form");
   var btnSubmit = document.getElementById("btn-submit");
   var bannerEl  = document.getElementById("form-banner");
@@ -69,6 +69,9 @@
     if (transitioning || next === currentStep) return;
     if (next < 0 || next > STEP_SUCCESS) return;
     transitioning = true;
+
+    // Shooting star on every slide change
+    if (typeof window.orbitShoot === "function") window.orbitShoot();
 
     var dir  = direction || "fwd";
     var cur  = el(currentStep);
@@ -161,6 +164,9 @@
 
   document.addEventListener("touchend", function (e) {
     if (currentStep < SLIDE_FIRST || currentStep > SLIDE_LAST) return;
+    // Solution slide is scrollable — disable swipe-to-navigate so vertical
+    // scrolling never accidentally skips to the form.
+    if (currentStep === STEP_SOLUTION) return;
     var dx = e.changedTouches[0].clientX - touchX;
     var dy = e.changedTouches[0].clientY - touchY;
     if (Math.abs(dx) < 50 || Math.abs(dx) < Math.abs(dy)) return;

@@ -216,6 +216,12 @@
     animId = requestAnimationFrame(draw);
   }
 
+  /* ── Public API: fire a shooting star on demand ── */
+  window.orbitShoot = function () {
+    if (reducedMotion) return;
+    shoots.push(makeShoot());
+  };
+
   /* ── Init ── */
   resize();
 

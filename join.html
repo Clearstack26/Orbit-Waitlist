@@ -24,7 +24,7 @@
   <body>
     <canvas id="stars-canvas" aria-hidden="true"></canvas>
 
-    <button class="btn-skip" id="btn-skip" aria-label="Skip to signup form">Skip</button>
+    <!-- btn-skip removed -->
 
     <div class="step-shell" id="step-shell">
 
@@ -49,6 +49,7 @@
             </div>
           </div>
           <p class="intro-sub">Turn every handshake into a real business relationship.</p>
+          <p class="intro-trust">Coming soon · iOS &amp; Android</p>
 
           <button class="btn-enter" id="btn-enter" aria-label="See how Orbit works">
             See how it works
@@ -64,19 +65,25 @@
       <div class="step slide-step problem-slide" id="step-1" aria-label="The problem Orbit solves">
         <div class="slide-content">
 
-          <p class="slide-kicker">Every event</p>
+          <p class="slide-kicker">After every conversation</p>
 
           <div class="problem-statement">
-            <p class="problem-line problem-line--a">You meet brilliant people.</p>
-            <p class="problem-line problem-line--b">You follow up with none of them.</p>
+            <p class="problem-line problem-line--a">The card goes in your pocket.</p>
+            <p class="problem-line problem-line--b">By tomorrow, it's all gone, life takes over.</p>
           </div>
 
-          <p class="problem-body">The card goes in your pocket. The name fades by Monday. The deal, the hire, the partnership — it just never happens.</p>
+          <div class="problem-beats">
+            <p class="problem-beat problem-beat--1">You tell yourself you'll remember. You open your notes and never write it down. By the time you want to reach out, the card has fallen through a crack, gone through the wash, or simply disappeared.</p>
+
+            <p class="problem-beat problem-beat--2">You think about messaging them. But you can't remember their company, their role, or what you actually talked about.</p>
+
+            <p class="problem-beat problem-beat--3">With Orbit, you scan their card or record a quick note just after the conversation. Orbit builds a profile for them, for that event, and personalises a follow-up ready to go when the event is over. Simple, easy and as one.</p>
+          </div>
 
           <div class="slide-nav">
             <div class="progress-dots" aria-label="Slide 1 of 2"></div>
             <button class="btn-continue" data-next="2">
-              The fix
+              The solution
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
             </button>
           </div>
@@ -85,43 +92,61 @@
       </div>
 
       <!-- ═══════════════════════════════
-           STEP 2: THE SOLUTION — 3 steps
+           STEP 2: THE SOLUTION — scrollable
       ═══════════════════════════════ -->
       <div class="step slide-step solution-slide" id="step-2" aria-label="How Orbit solves it">
         <div class="slide-content">
 
           <p class="slide-kicker">The solution</p>
-          <h2 class="slide-heading">Orbit keeps every connection alive.</h2>
+          <h2 class="slide-heading">Everything in one place.</h2>
 
           <div class="orbit-steps">
 
             <div class="orbit-step">
               <span class="orbit-step__num">01</span>
               <div class="orbit-step__body">
-                <strong>Scan the card</strong>
-                <span>At the event or the whole stack at home. Contact profile built in seconds.</span>
+                <strong>Talk to Orbit</strong>
+                <span>Orbit is your personal event assistant. Open Orbit chat at the event or when you get home and capture every conversation while it is still fresh.</span>
               </div>
             </div>
 
             <div class="orbit-step">
               <span class="orbit-step__num">02</span>
               <div class="orbit-step__body">
-                <strong>Tell Orbit what you remember</strong>
-                <span>One voice note. "She's raising Series A, wants an intro." Orbit stores it and uses it.</span>
+                <strong>Scan any card</strong>
+                <span>Use the Orbit card scanner in the moment or scan your whole stack at home. Orbit pulls the details and builds a contact profile in seconds.</span>
               </div>
             </div>
 
             <div class="orbit-step">
               <span class="orbit-step__num">03</span>
               <div class="orbit-step__body">
-                <strong>Show up first</strong>
-                <span>Orbit nudges you at the right moment, drafts the message, adds context. You send it.</span>
+                <strong>Tag the event. Add your notes.</strong>
+                <span>Add every contact to the event they belong to. Leave notes for each person: new partner, new employee, new friend. Orbit uses it to personalise every follow-up.</span>
+              </div>
+            </div>
+
+            <div class="orbit-step">
+              <span class="orbit-step__num">04</span>
+              <div class="orbit-step__body">
+                <strong>Never lose a connection</strong>
+                <span>Orbit keeps you notified so nothing slips through. If you have not followed up, you will know. Stay on top of your goal for every event you attend.</span>
+              </div>
+            </div>
+
+            <div class="orbit-step">
+              <span class="orbit-step__num">05</span>
+              <div class="orbit-step__body">
+                <strong>Your digital business card</strong>
+                <span>Your links, website, and socials in one card. Add it to Apple Wallet and ditch the paper stack. They scan with their camera and connect with you long after the event.</span>
               </div>
             </div>
 
           </div>
 
-          <div class="slide-nav">
+          <p class="solution-closer">Full control with Orbit. Everything in one place.</p>
+
+          <div class="solution-cta-bar">
             <div class="progress-dots" aria-label="Slide 2 of 2"></div>
             <button class="btn-continue btn-continue--cta" data-next="3">
               Get early access
@@ -143,14 +168,7 @@
           </div>
 
           <h1 class="form-heading">Secure your spot.</h1>
-          <p class="form-subheading">You are already ahead. Be the first to know when Orbit drops on iOS and Android.</p>
-
-          <div class="form-badge-wrap">
-            <span class="waitlist-count" aria-label="Waitlist is open">
-              <span class="waitlist-count__dot" aria-hidden="true"></span>
-              Waitlist open
-            </span>
-          </div>
+          <p class="form-subheading">Be first in. Founding members get early access and a say in what we build.</p>
 
           <div class="form-card">
             <div id="form-banner" class="form-banner" role="alert" aria-live="polite"></div>
@@ -220,7 +238,7 @@
 
     </div>
 
-    <footer class="page-footer">ORBIT <span class="page-footer__dot">·</span> Coming soon</footer>
+    <!-- page-footer removed -->
 
     <script src="/stars.js"></script>
     <script src="/form.js"></script>
