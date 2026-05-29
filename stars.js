@@ -33,11 +33,13 @@
   var PALETTE = [
     "255,255,255",
     "255,255,255",
-    "255,255,255",
-    "210,235,255",
-    "34,211,238",
-    "168,85,247",
-    "200,210,255",
+    "220,200,255",   // soft violet-white
+    "200,160,255",   // lavender
+    "180,120,255",   // purple
+    "180,120,255",
+    "210,180,255",   // pale purple
+    "240,230,255",   // near-white with purple tint
+    "34,211,238",    // cyan accent (rare)
   ];
 
   function pickColor() { return PALETTE[randInt(0, PALETTE.length - 1)]; }

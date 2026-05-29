@@ -1,7 +1,7 @@
-/* Orbit Waitlist — dark space theme */
+/* Orbit Waitlist — purple space theme */
 
 :root {
-  --bg: #04040f;
+  --bg: #0c0818;
   --bg-card: rgba(255, 255, 255, 0.06);
   --ink: #ffffff;
   --ink-soft: rgba(255, 255, 255, 0.88);
@@ -45,6 +45,10 @@ body {
   line-height: 1.55;
   color: var(--ink);
   background-color: var(--bg);
+  background-image:
+    radial-gradient(ellipse 130% 65% at 50% -5%, rgba(110, 50, 220, 0.45) 0%, transparent 58%),
+    radial-gradient(ellipse 80% 55% at 15% 55%, rgba(90, 30, 200, 0.22) 0%, transparent 55%),
+    radial-gradient(ellipse 70% 50% at 85% 75%, rgba(130, 60, 240, 0.18) 0%, transparent 50%);
   position: relative;
   overflow: hidden;
 }
@@ -59,7 +63,7 @@ body {
   pointer-events: none;
 }
 
-/* ─── Ambient radial gradient ─── */
+/* ─── Ambient purple overlay ─── */
 body::after {
   content: "";
   position: fixed;
@@ -67,8 +71,9 @@ body::after {
   z-index: 0;
   pointer-events: none;
   background:
-    radial-gradient(ellipse 70% 50% at 15% 20%, rgba(34, 211, 238, 0.055) 0%, transparent 60%),
-    radial-gradient(ellipse 60% 40% at 85% 80%, rgba(168, 85, 247, 0.065) 0%, transparent 55%);
+    radial-gradient(ellipse 55% 45% at 75% 18%, rgba(168, 85, 247, 0.14) 0%, transparent 55%),
+    radial-gradient(ellipse 50% 40% at 20% 82%, rgba(120, 50, 230, 0.12) 0%, transparent 52%),
+    radial-gradient(ellipse 40% 35% at 50% 50%, rgba(100, 40, 200, 0.08) 0%, transparent 60%);
 }
 
 /* ─── Step shell ─── */
@@ -149,21 +154,24 @@ body::after {
 .ring-outer {
   width: 100%;
   height: 100%;
-  border: 1px solid rgba(120, 90, 230, 0.22);
+  border: 1px solid rgba(150, 80, 255, 0.32);
+  box-shadow: 0 0 24px rgba(150, 80, 255, 0.06), inset 0 0 24px rgba(150, 80, 255, 0.03);
   animation: ring-spin 18s linear infinite;
 }
 
 .ring-mid {
   width: 68%;
   height: 68%;
-  border: 1px solid rgba(34, 211, 238, 0.20);
+  border: 1px solid rgba(100, 60, 220, 0.28);
+  box-shadow: 0 0 18px rgba(100, 60, 220, 0.07);
   animation: ring-spin 11s linear infinite reverse;
 }
 
 .ring-inner {
   width: 38%;
   height: 38%;
-  border: 1px solid rgba(168, 85, 247, 0.28);
+  border: 1px solid rgba(180, 100, 255, 0.38);
+  box-shadow: 0 0 14px rgba(180, 100, 255, 0.1);
   animation: ring-spin 6s linear infinite;
 }
 
@@ -176,12 +184,12 @@ body::after {
 }
 
 .dot-outer {
-  width: 9px;
-  height: 9px;
-  top: -4.5px;
-  margin-left: -4.5px;
-  background: #a78bfa;
-  box-shadow: 0 0 8px #a78bfa, 0 0 18px rgba(167, 139, 250, 0.55);
+  width: 10px;
+  height: 10px;
+  top: -5px;
+  margin-left: -5px;
+  background: #c084fc;
+  box-shadow: 0 0 10px #c084fc, 0 0 22px rgba(192, 132, 252, 0.65);
 }
 
 .dot-mid {
@@ -189,8 +197,8 @@ body::after {
   height: 7px;
   top: -3.5px;
   margin-left: -3.5px;
-  background: #22d3ee;
-  box-shadow: 0 0 7px #22d3ee, 0 0 14px rgba(34, 211, 238, 0.5);
+  background: #a78bfa;
+  box-shadow: 0 0 8px #a78bfa, 0 0 16px rgba(167, 139, 250, 0.6);
 }
 
 .dot-inner {
@@ -198,8 +206,8 @@ body::after {
   height: 5px;
   top: -2.5px;
   margin-left: -2.5px;
-  background: #e9d5ff;
-  box-shadow: 0 0 5px rgba(233, 213, 255, 0.8);
+  background: #f0e6ff;
+  box-shadow: 0 0 7px rgba(240, 230, 255, 0.9);
 }
 
 .orbital-center {
@@ -215,16 +223,18 @@ body::after {
 }
 
 .orbital-center--logo {
-  width: 40%;
-  height: 40%;
-  padding: 10%;
+  width: 62%;
+  height: auto;
+  overflow: visible;
+  padding: 0;
+  border-radius: 0;
 }
 
 .orbital-center--logo img {
   width: 100%;
-  height: 100%;
+  height: auto;
   object-fit: contain;
-  filter: drop-shadow(0 0 10px rgba(34, 211, 238, 0.5));
+  filter: drop-shadow(0 0 18px rgba(168, 85, 247, 0.65)) drop-shadow(0 0 36px rgba(120, 50, 230, 0.35));
 }
 
 @keyframes ring-spin {
@@ -255,14 +265,7 @@ body::after {
   width: 100%;
 }
 
-.intro-wordmark {
-  height: clamp(1.6rem, 6vw, 2.2rem);
-  width: auto;
-  max-width: 14rem;
-  object-fit: contain;
-  filter: drop-shadow(0 0 14px rgba(34, 211, 238, 0.3));
-  margin-top: -0.25rem;
-}
+/* .intro-wordmark removed — wordmark now lives inside the orbital center */
 
 .intro-sub {
   margin: 0;
@@ -969,8 +972,8 @@ body::after {
 body.page-qr {
   overflow: auto;
   background:
-    radial-gradient(ellipse 80% 60% at 50% 0%, rgba(34, 211, 238, 0.08) 0%, transparent 55%),
-    radial-gradient(ellipse 70% 50% at 50% 100%, rgba(168, 85, 247, 0.1) 0%, transparent 55%),
+    radial-gradient(ellipse 100% 65% at 50% 0%, rgba(110, 50, 220, 0.35) 0%, transparent 58%),
+    radial-gradient(ellipse 70% 50% at 50% 100%, rgba(130, 60, 240, 0.2) 0%, transparent 55%),
     var(--bg);
 }
 
