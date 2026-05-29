@@ -5,17 +5,12 @@
 
   var STEP_INTRO    = 0;
   var STEP_PROBLEM  = 1;
-  var STEP_MESS     = 2;
-  var STEP_COST     = 3;
-  var STEP_VOICE    = 4;
-  var STEP_SCAN     = 5;
-  var STEP_FOLLOW   = 6;
-  var STEP_OUTCOME  = 7;
-  var STEP_FORM     = 8;
-  var STEP_SUCCESS  = 9;
+  var STEP_SOLUTION = 2;
+  var STEP_FORM     = 3;
+  var STEP_SUCCESS  = 4;
 
   var SLIDE_FIRST = STEP_PROBLEM;
-  var SLIDE_LAST  = STEP_OUTCOME;
+  var SLIDE_LAST  = STEP_SOLUTION;
 
   var currentStep   = STEP_INTRO;
   var transitioning = false;
@@ -29,6 +24,7 @@
   var btnSubmit = document.getElementById("btn-submit");
   var bannerEl  = document.getElementById("form-banner");
   var formState = document.getElementById("form-state");
+  var footer    = document.querySelector(".page-footer");
 
   var nameInput    = document.getElementById("field-name");
   var emailInput   = document.getElementById("field-email");
@@ -56,12 +52,17 @@
 
   function updateProgressDots() {
     document.querySelectorAll(".progress-dots").forEach(function (container) {
-      var slideStep = currentStep;
       container.querySelectorAll(".progress-dot").forEach(function (dot) {
         var target = parseInt(dot.getAttribute("data-goto"), 10);
-        dot.classList.toggle("is-active", target === slideStep);
+        dot.classList.toggle("is-active", target === currentStep);
       });
     });
+  }
+
+  function updateFooter() {
+    if (!footer) return;
+    var hide = (currentStep === STEP_FORM || currentStep === STEP_SUCCESS);
+    footer.classList.toggle("is-hidden", hide);
   }
 
   function goTo(next, direction) {
@@ -75,9 +76,7 @@
     if (!dest) { transitioning = false; return; }
 
     if (next >= SLIDE_FIRST && next <= SLIDE_LAST) {
-      if (dir === "back") {
-        dest.classList.add("from-left");
-      }
+      if (dir === "back") dest.classList.add("from-left");
     }
 
     if (cur) {
@@ -86,9 +85,7 @@
     }
 
     setTimeout(function () {
-      if (cur) {
-        cur.classList.remove("is-exit-fwd", "is-exit-back");
-      }
+      if (cur) cur.classList.remove("is-exit-fwd", "is-exit-back");
 
       dest.classList.remove("from-left");
       dest.classList.add("is-active");
@@ -98,6 +95,7 @@
 
       updateSkip();
       updateProgressDots();
+      updateFooter();
       scrollTop(dest);
 
       var first = dest.querySelector("button:not([tabindex='-1']), input, textarea");
@@ -116,6 +114,8 @@
     btnSkip.classList.toggle("is-visible", skippable);
   }
 
+  /* ── Wire up buttons ── */
+
   if (btnEnter) {
     btnEnter.addEventListener("click", function () { goTo(STEP_PROBLEM, "fwd"); });
   }
@@ -128,8 +128,7 @@
     btn.addEventListener("click", function () {
       var target = parseInt(btn.getAttribute("data-next"), 10);
       if (isNaN(target)) return;
-      var dir = target < currentStep ? "back" : "fwd";
-      goTo(target, dir);
+      goTo(target, target < currentStep ? "back" : "fwd");
     });
   });
 
@@ -138,8 +137,7 @@
     if (!dot) return;
     var target = parseInt(dot.getAttribute("data-goto"), 10);
     if (isNaN(target)) return;
-    var dir = target < currentStep ? "back" : "fwd";
-    goTo(target, dir);
+    goTo(target, target < currentStep ? "back" : "fwd");
   });
 
   document.addEventListener("keydown", function (e) {
@@ -149,11 +147,11 @@
       e.preventDefault();
       var target = parseInt(dot.getAttribute("data-goto"), 10);
       if (isNaN(target)) return;
-      var dir = target < currentStep ? "back" : "fwd";
-      goTo(target, dir);
+      goTo(target, target < currentStep ? "back" : "fwd");
     }
   });
 
+  /* ── Swipe navigation ── */
   var touchX = 0, touchY = 0;
 
   document.addEventListener("touchstart", function (e) {
@@ -166,7 +164,6 @@
     var dx = e.changedTouches[0].clientX - touchX;
     var dy = e.changedTouches[0].clientY - touchY;
     if (Math.abs(dx) < 50 || Math.abs(dx) < Math.abs(dy)) return;
-
     if (dx < 0 && currentStep < SLIDE_LAST) {
       goTo(currentStep + 1, "fwd");
     } else if (dx > 0 && currentStep > SLIDE_FIRST) {
@@ -174,6 +171,7 @@
     }
   }, { passive: true });
 
+  /* ── Form validation ── */
   function clearErrors() {
     nameInput.classList.remove("is-error");
     emailInput.classList.remove("is-error");
@@ -234,9 +232,11 @@
     });
   }
 
+  /* ── Bootstrap ── */
   buildProgressDots();
   updateSkip();
   updateProgressDots();
+  updateFooter();
 
   fetch("/site-config.json", { cache: "no-store" })
     .then(function (r) { return r.ok ? r.json() : null; })
@@ -276,8 +276,8 @@
           name:  name.trim(),
           email: email.trim().toLowerCase(),
         };
-        if (pain)    payload.pain_point       = pain;
-        if (feature) payload.feature_request  = feature;
+        if (pain)    payload.pain_point      = pain;
+        if (feature) payload.feature_request = feature;
 
         submitToSupabase(payload)
           .then(function (result) {

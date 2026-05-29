@@ -6,14 +6,17 @@
   "scripts": {
     "vendor:qrcode": "esbuild node_modules/qrcode/lib/browser.js --bundle --platform=browser --format=iife --global-name=QRCode --minify --outfile=vendor/qrcode.min.js",
     "build:vcf": "node scripts/build-orbit-vcard.mjs",
-    "build": "npm run vendor:qrcode",
+    "build:qr": "node scripts/build-join-qr.mjs",
+    "build": "npm run vendor:qrcode && npm run build:qr",
     "verify:qr": "node scripts/verify-qr.mjs",
-    "vercel-build": "npm run vendor:qrcode",
+    "vercel-build": "npm run vendor:qrcode && npm run build:qr",
     "start": "serve . -l 3000",
     "dev": "serve . -l 3000"
   },
   "devDependencies": {
     "esbuild": "^0.21.5",
+    "jsqr": "^1.4.0",
+    "pngjs": "^7.0.0",
     "qrcode": "^1.5.4",
     "serve": "^14.2.4"
   }

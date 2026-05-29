@@ -28,297 +28,156 @@
 
     <div class="step-shell" id="step-shell">
 
-      <!-- STEP 0: INTRO -->
+      <!-- ═══════════════════════════════
+           STEP 0: INTRO — orbital splash
+      ═══════════════════════════════ -->
       <div class="step intro-step is-active" id="step-0" role="main">
+        <div class="intro-inner">
 
-        <div class="orbital-wrap orbital-wrap--lg" aria-hidden="true">
-          <div class="orbital-ring ring-outer">
-            <div class="orbital-dot dot-outer"></div>
+          <div class="orbital-wrap orbital-wrap--lg" aria-hidden="true">
+            <div class="orbital-ring ring-outer">
+              <div class="orbital-dot dot-outer"></div>
+            </div>
+            <div class="orbital-ring ring-mid">
+              <div class="orbital-dot dot-mid"></div>
+            </div>
+            <div class="orbital-ring ring-inner">
+              <div class="orbital-dot dot-inner"></div>
+            </div>
+            <div class="orbital-center orbital-center--logo">
+              <img src="/assets/logo-mark.png" alt="" />
+            </div>
           </div>
-          <div class="orbital-ring ring-mid">
-            <div class="orbital-dot dot-mid"></div>
-          </div>
-          <div class="orbital-ring ring-inner">
-            <div class="orbital-dot dot-inner"></div>
-          </div>
-          <div class="orbital-center orbital-center--logo">
-            <img src="/assets/logo-mark.png" alt="" />
-          </div>
-        </div>
 
-        <div class="intro-brand">
-          <img src="/assets/logo-white.png" alt="Orbit" class="intro-logo" />
+          <img src="/assets/logo-white.png" alt="Orbit" class="intro-wordmark" />
           <p class="intro-sub">Turn every handshake into a real business relationship.</p>
+
+          <button class="btn-enter" id="btn-enter" aria-label="See how Orbit works">
+            See how it works
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+          </button>
+
         </div>
-
-        <button class="btn-enter" id="btn-enter" aria-label="See how Orbit works">
-          See How It Works
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
-        </button>
-
       </div>
 
-      <!-- STEP 1: THE PROBLEM -->
-      <div class="step slide-step" id="step-1" aria-label="The problem Orbit solves">
+      <!-- ═══════════════════════════════
+           STEP 1: THE PROBLEM — cinematic
+      ═══════════════════════════════ -->
+      <div class="step slide-step problem-slide" id="step-1" aria-label="The problem Orbit solves">
+        <div class="slide-content">
 
-        <div class="slide-top">
-          <div class="stat-pair" aria-hidden="true">
-            <div class="stat-block">
-              <span class="stat-number">20</span>
-              <span class="stat-label">people met</span>
+          <p class="slide-kicker">The problem</p>
+
+          <div class="stat-callout" aria-label="20 conversations, 0 follow-ups">
+            <div class="stat-pair">
+              <span class="stat-n">20</span>
+              <span class="stat-l">conversations</span>
             </div>
-            <div class="stat-divider"></div>
-            <div class="stat-block stat-block--accent">
-              <span class="stat-number">0</span>
-              <span class="stat-label">follow-ups sent</span>
-            </div>
-          </div>
-        </div>
-
-        <div class="slide-bottom">
-          <p class="slide-kicker">The Problem</p>
-          <h2 class="slide-heading">You meet 20 people.<br/>You follow up with none.</h2>
-          <p class="slide-body">Networking events should grow your business. Instead, names fade, cards pile up, and every handshake becomes a "maybe someday" that never happens.</p>
-
-          <div class="slide-nav">
-            <div class="progress-dots" aria-label="Slide 1 of 7"></div>
-            <button class="btn-continue" data-next="2">
-              Continue
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
-            </button>
-          </div>
-        </div>
-
-      </div>
-
-      <!-- STEP 2: THE MESS -->
-      <div class="step slide-step" id="step-2" aria-label="The chaos after every event">
-
-        <div class="slide-top">
-          <div class="pain-stack" aria-hidden="true">
-            <div class="pain-card pain-card--back">
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v2"/></svg>
-            </div>
-            <div class="pain-card pain-card--mid">
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/><path d="M8 13h8"/><path d="M8 17h5"/></svg>
-            </div>
-            <div class="pain-card pain-card--front">
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"/><path d="M12 17h.01"/></svg>
+            <span class="stat-arrow" aria-hidden="true">&#8594;</span>
+            <div class="stat-pair stat-pair--zero">
+              <span class="stat-n stat-n--zero">0</span>
+              <span class="stat-l">follow-ups</span>
             </div>
           </div>
-        </div>
 
-        <div class="slide-bottom">
-          <p class="slide-kicker">Sound Familiar?</p>
-          <h2 class="slide-heading">Cards in pockets.<br/>Notes you cannot read.<br/>Names you cannot remember.</h2>
-          <ul class="pain-list">
-            <li>Business cards stuffed in wallets and drawers</li>
-            <li>Scribbled notes with no context</li>
-            <li>LinkedIn requests you meant to send</li>
+          <h2 class="slide-heading">You meet great people. Then life takes over.</h2>
+
+          <ul class="pain-list" aria-label="Common networking pain points">
+            <li class="pain-item">Cards stuffed in your pocket.</li>
+            <li class="pain-item">Names you cannot place a week later.</li>
+            <li class="pain-item">Follow-ups you meant to send, but never did.</li>
           </ul>
 
           <div class="slide-nav">
-            <div class="progress-dots" aria-label="Slide 2 of 7"></div>
-            <button class="btn-continue" data-next="3">
-              Continue
+            <div class="progress-dots" aria-label="Slide 1 of 2"></div>
+            <button class="btn-continue" data-next="2">
+              The solution
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
             </button>
           </div>
-        </div>
 
+        </div>
       </div>
 
-      <!-- STEP 3: THE COST -->
-      <div class="step slide-step" id="step-3" aria-label="The cost of forgotten connections">
+      <!-- ═══════════════════════════════
+           STEP 2: THE SOLUTION — features
+      ═══════════════════════════════ -->
+      <div class="step slide-step solution-slide" id="step-2" aria-label="How Orbit solves it">
+        <div class="slide-content">
 
-        <div class="slide-top">
-          <div class="orbital-wrap orbital-wrap--md" aria-hidden="true">
-            <div class="orbital-ring ring-outer"><div class="orbital-dot dot-outer"></div></div>
-            <div class="orbital-ring ring-mid"><div class="orbital-dot dot-mid"></div></div>
-            <div class="orbital-ring ring-inner"><div class="orbital-dot dot-inner"></div></div>
-            <div class="orbital-center">
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                <path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/>
-                <path d="M12 9v4"/><path d="M12 17h.01"/>
-              </svg>
+          <p class="slide-kicker">The solution</p>
+          <h2 class="slide-heading">Never lose a connection again.</h2>
+          <p class="slide-sub">Scan. Tag the event. Talk to Orbit. Follow up. All in one place.</p>
+
+          <div class="solution-features">
+
+            <div class="solution-feature">
+              <div class="solution-feature__icon" aria-hidden="true">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7V5a2 2 0 0 1 2-2h2"/><path d="M17 3h2a2 2 0 0 1 2 2v2"/><path d="M21 17v2a2 2 0 0 1-2 2h-2"/><path d="M7 21H5a2 2 0 0 1-2-2v-2"/><rect width="10" height="10" x="7" y="7" rx="1"/></svg>
+              </div>
+              <div class="solution-feature__text">
+                <strong>Scan as you go, or all at once</strong>
+                <span>Snap a card the moment you get it, or scan your whole stack in one go</span>
+              </div>
             </div>
-          </div>
-        </div>
 
-        <div class="slide-bottom">
-          <p class="slide-kicker">The Real Cost</p>
-          <h2 class="slide-heading">Every forgotten connection is a deal that never happened.</h2>
-          <p class="slide-body">That founder you forgot to email. That investor whose card is buried in a drawer. That perfect hire you met once and lost forever. Wasting connections should not be normal.</p>
-
-          <div class="slide-nav">
-            <div class="progress-dots" aria-label="Slide 3 of 7"></div>
-            <button class="btn-continue" data-next="4">
-              Continue
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
-            </button>
-          </div>
-        </div>
-
-      </div>
-
-      <!-- STEP 4: VOICE AI -->
-      <div class="step slide-step" id="step-4" aria-label="Orbit voice AI">
-
-        <div class="slide-top">
-          <div class="feature-hero" aria-hidden="true">
-            <div class="feature-hero__glow"></div>
-            <div class="feature-hero__icon">
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" x2="12" y1="19" y2="22"/></svg>
+            <div class="solution-feature">
+              <div class="solution-feature__icon" aria-hidden="true">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
+              </div>
+              <div class="solution-feature__text">
+                <strong>Tag the event</strong>
+                <span>Choose which event each contact came from. Orbit groups them automatically</span>
+              </div>
             </div>
-          </div>
-        </div>
 
-        <div class="slide-bottom">
-          <p class="slide-kicker">Voice AI</p>
-          <h2 class="slide-heading">Just speak.<br/>Orbit remembers everything.</h2>
-          <p class="slide-body">Met someone at an event? Tell Orbit their name, what you discussed, and why they matter. No typing. No forms. Talk like you would to a personal assistant.</p>
-
-          <div class="feature-highlight">
-            <span class="feature-highlight__label">You say</span>
-            <span class="feature-highlight__quote">"Met Sarah at the summit. She runs a fintech startup and wants to partner on distribution."</span>
-          </div>
-
-          <div class="slide-nav">
-            <div class="progress-dots" aria-label="Slide 4 of 7"></div>
-            <button class="btn-continue" data-next="5">
-              Continue
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
-            </button>
-          </div>
-        </div>
-
-      </div>
-
-      <!-- STEP 5: CARD SCANNER -->
-      <div class="step slide-step" id="step-5" aria-label="Orbit card scanner">
-
-        <div class="slide-top">
-          <div class="feature-hero" aria-hidden="true">
-            <div class="feature-hero__glow feature-hero__glow--cyan"></div>
-            <div class="feature-hero__icon">
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M7 8h.01"/><path d="M11 8h6"/><path d="M7 12h.01"/><path d="M11 12h6"/><path d="M7 16h.01"/><path d="M11 16h4"/></svg>
+            <div class="solution-feature">
+              <div class="solution-feature__icon" aria-hidden="true">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" x2="12" y1="19" y2="22"/></svg>
+              </div>
+              <div class="solution-feature__text">
+                <strong>Talk to Orbit about anyone</strong>
+                <span>Open a profile and tell Orbit what you remember. It updates everything</span>
+              </div>
             </div>
-          </div>
-        </div>
 
-        <div class="slide-bottom">
-          <p class="slide-kicker">Card Scanner</p>
-          <h2 class="slide-heading">Scan any card.<br/>Capture every detail.</h2>
-          <p class="slide-body">Point your camera at any business card. Orbit reads the details, links them to your voice notes, and builds a contact profile you can actually use later.</p>
+            <div class="solution-feature">
+              <div class="solution-feature__icon" aria-hidden="true">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+              </div>
+              <div class="solution-feature__text">
+                <strong>Smarter follow-ups, written for you</strong>
+                <span>Orbit drafts outreach using your conversation context, ready to send</span>
+              </div>
+            </div>
 
-          <div class="feature-rows">
-            <div class="feature-row">
-              <span class="feature-row__icon" aria-hidden="true">1</span>
-              <span class="feature-row__text">Scan their business card in seconds</span>
+            <div class="solution-feature">
+              <div class="solution-feature__icon" aria-hidden="true">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="14" x="2" y="5" rx="2"/><line x1="2" x2="22" y1="10" y2="10"/></svg>
+              </div>
+              <div class="solution-feature__text">
+                <strong>Your live digital card</strong>
+                <span>One card, all your links, always up to date in Apple Wallet</span>
+              </div>
             </div>
-            <div class="feature-row">
-              <span class="feature-row__icon" aria-hidden="true">2</span>
-              <span class="feature-row__text">Add context with your voice</span>
-            </div>
-            <div class="feature-row">
-              <span class="feature-row__icon" aria-hidden="true">3</span>
-              <span class="feature-row__text">Everything stored in one place</span>
-            </div>
+
           </div>
 
           <div class="slide-nav">
-            <div class="progress-dots" aria-label="Slide 5 of 7"></div>
-            <button class="btn-continue" data-next="6">
-              Continue
+            <div class="progress-dots" aria-label="Slide 2 of 2"></div>
+            <button class="btn-continue btn-continue--cta" data-next="3">
+              Get early access
               <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
             </button>
           </div>
-        </div>
 
+        </div>
       </div>
 
-      <!-- STEP 6: AI FOLLOW-UPS -->
-      <div class="step slide-step" id="step-6" aria-label="Orbit AI follow-ups">
-
-        <div class="slide-top">
-          <div class="feature-hero" aria-hidden="true">
-            <div class="feature-hero__glow feature-hero__glow--purple"></div>
-            <div class="feature-hero__icon">
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
-            </div>
-          </div>
-        </div>
-
-        <div class="slide-bottom">
-          <p class="slide-kicker">AI Follow-ups</p>
-          <h2 class="slide-heading">Perfect emails.<br/>Written for you.</h2>
-          <p class="slide-body">Orbit drafts personalized follow-up emails based on your conversation. Review, tweak if you want, and send. It reminds you when to reach out again so nothing slips through.</p>
-
-          <div class="email-preview" aria-hidden="true">
-            <div class="email-preview__header">
-              <span class="email-preview__dot"></span>
-              <span class="email-preview__dot"></span>
-              <span class="email-preview__dot"></span>
-            </div>
-            <div class="email-preview__body">
-              <p class="email-preview__line email-preview__line--short"></p>
-              <p class="email-preview__line"></p>
-              <p class="email-preview__line"></p>
-              <p class="email-preview__line email-preview__line--medium"></p>
-            </div>
-          </div>
-
-          <div class="slide-nav">
-            <div class="progress-dots" aria-label="Slide 6 of 7"></div>
-            <button class="btn-continue" data-next="7">
-              Continue
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
-            </button>
-          </div>
-        </div>
-
-      </div>
-
-      <!-- STEP 7: DIGITAL CARD + OUTCOME -->
-      <div class="step slide-step" id="step-7" aria-label="Your digital card and the outcome">
-
-        <div class="slide-top">
-          <div class="wallet-card" aria-hidden="true">
-            <div class="wallet-card__shine"></div>
-            <div class="wallet-card__logo">
-              <img src="/assets/logo-mark.png" alt="" />
-            </div>
-            <div class="wallet-card__lines">
-              <span></span>
-              <span></span>
-            </div>
-            <div class="wallet-card__badge">Apple Wallet</div>
-          </div>
-        </div>
-
-        <div class="slide-bottom">
-          <p class="slide-kicker">Your Digital Card</p>
-          <h2 class="slide-heading">One scan.<br/>Forever in their contacts.</h2>
-          <p class="slide-body">Orbit gives you a digital business card that lives in Apple Wallet. Share it at any event. Always up to date. No paper. No reprints. No getting lost in a pile.</p>
-
-          <div class="outcome-banner">
-            <p class="outcome-banner__title">Real relationships. Real business.</p>
-            <p class="outcome-banner__text">Know who to follow up with, what to say, and when to say it. Turn every handshake into momentum.</p>
-          </div>
-
-          <div class="slide-nav">
-            <div class="progress-dots" aria-label="Slide 7 of 7"></div>
-            <button class="btn-continue btn-continue--cta" data-next="8">
-              Get Early Access
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
-            </button>
-          </div>
-        </div>
-
-      </div>
-
-      <!-- STEP 8: FORM -->
-      <div class="step form-step" id="step-8" aria-label="Waitlist signup form">
+      <!-- ═══════════════════════════════
+           STEP 3: FORM
+      ═══════════════════════════════ -->
+      <div class="step form-step" id="step-3" aria-label="Waitlist signup form">
         <div class="form-page">
 
           <div class="orbit-logo">
@@ -384,31 +243,21 @@
 
               </form>
             </div>
-
           </div>
 
           <p class="form-footnote">No spam. Unsubscribe any time.</p>
-
         </div>
       </div>
 
-      <!-- STEP 9: SUCCESS -->
-      <div class="step success-step" id="step-9" role="status" aria-live="polite" aria-label="Successfully joined waitlist">
-
-        <div class="orbital-wrap orbital-wrap--md" aria-hidden="true">
-          <div class="orbital-ring ring-outer"><div class="orbital-dot dot-outer"></div></div>
-          <div class="orbital-ring ring-mid"><div class="orbital-dot dot-mid"></div></div>
-          <div class="orbital-ring ring-inner"><div class="orbital-dot dot-inner"></div></div>
-          <div class="orbital-center">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"></polyline></svg>
-          </div>
-        </div>
-
-        <div>
+      <!-- ═══════════════════════════════
+           STEP 4: SUCCESS
+      ═══════════════════════════════ -->
+      <div class="step success-step" id="step-4" role="status" aria-live="polite" aria-label="Successfully joined waitlist">
+        <div class="success-stack">
+          <img src="/assets/logo-white.png" alt="" class="success-logo" aria-hidden="true" />
           <h2 class="success-title">You are in orbit.</h2>
           <p class="success-text">We will reach out the moment Orbit launches. Founding waitlist members get early access and a say in what we build next.</p>
         </div>
-
       </div>
 
     </div>

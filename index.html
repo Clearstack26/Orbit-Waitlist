@@ -89,7 +89,11 @@
     </style>
   </head>
   <body>
-    <a class="visually-hidden" href="/join">Start the Orbit waitlist experience</a>
+    <a
+      class="visually-hidden"
+      href="https://orbit-waitlist-one.vercel.app/join"
+      >Start the Orbit waitlist experience</a
+    >
     <div id="wrap">
       <canvas
         id="qr-url"
@@ -104,6 +108,7 @@
       (function () {
         var canvas = document.getElementById("qr-url");
         var errEl = document.getElementById("err");
+        var JOIN_URL = "https://orbit-waitlist-one.vercel.app/join";
 
         function showErr(msg) {
           canvas.hidden = true;
@@ -124,6 +129,11 @@
           var baseOrigin;
           if (raw && raw.indexOf(placeholder) === -1) {
             baseOrigin = raw.replace(/\/$/, "");
+          } else if (
+            window.location.hostname === "localhost" ||
+            window.location.hostname === "127.0.0.1"
+          ) {
+            baseOrigin = JOIN_URL.replace(/\/join$/, "");
           } else {
             baseOrigin = window.location.origin;
           }
@@ -205,17 +215,13 @@
             .then(function (cfg) {
               var joinUrl = resolveJoinUrl(cfg);
               errEl.hidden = true;
-              return drawCanvas(
-                joinUrl,
-                "Opens in browser: " + joinUrl
-              );
+              return drawCanvas(joinUrl, "Opens in browser: " + joinUrl);
             })
             .catch(function () {
-              var fallback = resolveJoinUrl(null);
               errEl.hidden = true;
               return drawCanvas(
-                fallback,
-                "Opens in browser: " + fallback
+                JOIN_URL,
+                "Opens in browser: " + JOIN_URL
               );
             })
             .catch(function () {
