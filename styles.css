@@ -250,8 +250,6 @@ body::after {
   width: 100%;
   height: auto;
   object-fit: contain;
-  mix-blend-mode: screen;
-  filter: drop-shadow(0 0 18px rgba(168, 85, 247, 0.65)) drop-shadow(0 0 36px rgba(120, 50, 230, 0.35));
 }
 
 @keyframes ring-spin {
@@ -835,8 +833,6 @@ body::after {
   height: clamp(4.5rem, 22vw, 7rem);
   width: auto;
   object-fit: contain;
-  mix-blend-mode: screen;
-  filter: drop-shadow(0 0 18px rgba(168, 85, 247, 0.55)) drop-shadow(0 0 36px rgba(34, 211, 238, 0.2));
 }
 
 .form-heading {
@@ -1019,8 +1015,6 @@ body::after {
   height: clamp(5.5rem, 22vw, 8rem);
   width: auto;
   object-fit: contain;
-  mix-blend-mode: screen;
-  filter: drop-shadow(0 0 24px rgba(34, 211, 238, 0.5));
 }
 
 .success-title {
