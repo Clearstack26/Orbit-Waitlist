@@ -263,6 +263,7 @@ body::after {
   gap: clamp(1rem, 2.5vh, 1.4rem);
   max-width: 22rem;
   width: 100%;
+  padding-bottom: clamp(2rem, 5vh, 2.8rem);
 }
 
 /* .intro-wordmark removed — wordmark now lives inside the orbital center */
