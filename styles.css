@@ -90,23 +90,44 @@ body::after {
   flex-direction: column;
   opacity: 0;
   pointer-events: none;
-  transform: translateY(18px);
-  transition: opacity 0.42s ease, transform 0.42s ease;
+  /* Default resting state: off to the right */
+  transform: translateX(32px);
+  transition: opacity 0.38s ease, transform 0.38s ease;
   overflow-y: auto;
   overflow-x: hidden;
   -webkit-overflow-scrolling: touch;
 }
 
+/* Intro and form steps use a gentler fade-up, not slide */
+#step-0,
+#step-4,
+#step-5 {
+  transform: translateY(16px);
+}
+
 .step.is-active {
   opacity: 1;
   pointer-events: auto;
-  transform: translateY(0);
+  transform: translate(0, 0);
 }
 
-.step.is-exit {
+/* Exit forward: slide out to the left */
+.step.is-exit-fwd {
   opacity: 0;
-  transform: translateY(-14px);
+  transform: translateX(-32px);
   pointer-events: none;
+}
+
+/* Exit backward: slide out to the right */
+.step.is-exit-back {
+  opacity: 0;
+  transform: translateX(32px);
+  pointer-events: none;
+}
+
+/* Enter from left (when going back) */
+.step.from-left {
+  transform: translateX(-32px);
 }
 
 /* ─────────────────────────────────────
@@ -403,6 +424,36 @@ body::after {
 }
 .btn-skip.is-visible { display: block; }
 .btn-skip:hover { background: rgba(255,255,255,0.12); color: var(--ink); }
+
+/* ─── Feature pills (slide 2) ─── */
+.feature-pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+  margin-top: 1rem;
+}
+
+.feature-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.32rem 0.72rem;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  color: var(--purple-mid);
+  background: rgba(139, 92, 246, 0.08);
+  border: 1px solid rgba(139, 92, 246, 0.28);
+  border-radius: 999px;
+  white-space: nowrap;
+}
+
+.feature-pill svg {
+  width: 0.75rem;
+  height: 0.75rem;
+  flex-shrink: 0;
+  color: var(--cyan);
+}
 
 /* ─────────────────────────────────────
    STEP 4 — FORM
