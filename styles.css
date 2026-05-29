@@ -248,8 +248,8 @@ body::after {
 .intro-step {
   position: relative;
   align-items: center;
-  justify-content: center;
-  padding: max(10vh, calc(env(safe-area-inset-top) + 2rem))
+  justify-content: flex-start;
+  padding: max(32vh, calc(env(safe-area-inset-top) + 3rem))
            max(1.25rem, env(safe-area-inset-right))
            max(3rem, calc(env(safe-area-inset-bottom) + 2rem))
            max(1.25rem, env(safe-area-inset-left));
