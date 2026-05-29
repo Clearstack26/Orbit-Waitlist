@@ -1,109 +1,167 @@
 /**
- * Orbit — immersive starfield animation.
- * Dense twinkling stars, frequent shooting stars, depth layers, nebula glow.
+ * Orbit — immersive starfield.
+ * Dense twinkling stars · shooting stars from ALL edges · sporadic fiery meteors.
  */
 (function () {
   var canvas = document.getElementById("stars-canvas");
   if (!canvas) return;
   var ctx = canvas.getContext("2d");
 
-  var W = 0, H = 0;
-  var dpr = 1;
+  var W = 0, H = 0, dpr = 1;
   var animId;
 
-  /* ── Tuning ─────────────────────────────────── */
-  var STAR_COUNT          = 420;
-  var DEEP_COUNT          = 180;   // tiny far-away layer
-  var SHOOTING_MIN_MS     = 800;
-  var SHOOTING_MAX_MS     = 2200;
-  var MAX_CONCURRENT_SHOOTS = 5;
-  /* ─────────────────────────────────────────────── */
+  /* ── Config ─── */
+  var STAR_COUNT      = 450;
+  var DEEP_COUNT      = 200;
+  var SHOOT_MIN_MS    = 600;
+  var SHOOT_MAX_MS    = 1800;
+  var MAX_SHOOTS      = 7;
+  var METEOR_MIN_MS   = 18000;
+  var METEOR_MAX_MS   = 35000;
+  /* ──────────────── */
 
-  var stars = [];
-  var deepStars = [];
-  var shoots = [];
-  var lastShoot = 0;
-  var nextShootDelay = rand(SHOOTING_MIN_MS, SHOOTING_MAX_MS);
+  var stars      = [];
+  var deepStars  = [];
+  var shoots     = [];
+  var meteors    = [];
+
+  var lastShoot      = 0;
+  var nextShootDelay = rand(SHOOT_MIN_MS, SHOOT_MAX_MS);
+  var lastMeteor     = 0;
+  var nextMeteorDelay = rand(METEOR_MIN_MS, METEOR_MAX_MS);
+
+  /* Off-screen nebula cache */
+  var nebCanvas  = document.createElement("canvas");
+  var nebCtx     = nebCanvas.getContext("2d");
 
   function rand(a, b) { return a + Math.random() * (b - a); }
   function randInt(a, b) { return Math.floor(rand(a, b + 1)); }
+  function pick(arr) { return arr[randInt(0, arr.length - 1)]; }
 
-  /* ── Star colour palette ── */
   var PALETTE = [
-    "255,255,255",   // white  — most common
-    "255,255,255",
-    "255,255,255",
-    "210,235,255",   // blue-white
-    "34,211,238",    // cyan
-    "34,211,238",
-    "168,85,247",    // purple
-    "180,200,255",   // cool blue
-    "255,210,180",   // warm orange (rare)
+    "255,255,255","255,255,255","255,255,255",
+    "210,235,255","210,235,255",
+    "34,211,238","34,211,238",
+    "168,85,247",
+    "180,200,255",
+    "255,220,160",
   ];
 
-  function pickColor() {
-    return PALETTE[randInt(0, PALETTE.length - 1)];
-  }
-
-  function makeStar(wide, tall) {
+  /* ── Stars ── */
+  function makeStar(W, H) {
     return {
-      x:     rand(0, wide),
-      y:     rand(0, tall),
-      r:     rand(0.4, 2.0),
-      color: pickColor(),
-      baseA: rand(0.3, 1.0),
-      alpha: 0,
-      speed: rand(0.005, 0.022),
+      x: rand(0, W), y: rand(0, H),
+      r: rand(0.35, 2.1),
+      color: pick(PALETTE),
+      baseA: rand(0.25, 1.0),
+      speed: rand(0.004, 0.024),
+      phase: rand(0, Math.PI * 2),
+    };
+  }
+  function makeDeep(W, H) {
+    return {
+      x: rand(0, W), y: rand(0, H),
+      r: rand(0.18, 0.65),
+      baseA: rand(0.06, 0.3),
+      speed: rand(0.002, 0.008),
       phase: rand(0, Math.PI * 2),
     };
   }
 
-  function makeDeepStar(wide, tall) {
-    return {
-      x:     rand(0, wide),
-      y:     rand(0, tall),
-      r:     rand(0.2, 0.7),
-      color: "210,225,255",
-      baseA: rand(0.08, 0.35),
-      alpha: 0,
-      speed: rand(0.002, 0.009),
-      phase: rand(0, Math.PI * 2),
-    };
-  }
-
-  /* ── Shooting star ── */
+  /* ── Shooting star — from any of 4 edges ── */
   function makeShoot() {
-    /* Varied entry angles — mostly left-to-right but some steep diagonals */
-    var angle = rand(20, 65) * (Math.PI / 180);
-    /* Sometimes flip and come from top-right */
-    if (Math.random() < 0.25) angle = rand(115, 155) * (Math.PI / 180);
+    var edge = randInt(0, 3); // 0=top 1=right 2=bottom 3=left
+    var sx, sy, angle;
 
-    var speed  = rand(6, 14);
-    var length = rand(120, 320);
-    var sx = rand(W * 0.05, W * 0.9);
-    var sy = rand(0, H * 0.55);
+    if (edge === 0) {          /* top → diagonal down */
+      sx = rand(W * 0.05, W * 0.9);
+      sy = -20;
+      angle = rand(25, 65) * (Math.PI / 180);
+    } else if (edge === 1) {   /* right → diagonal left-down */
+      sx = W + 20;
+      sy = rand(H * 0.0, H * 0.6);
+      angle = rand(140, 200) * (Math.PI / 180);
+    } else if (edge === 2) {   /* bottom → diagonal up */
+      sx = rand(W * 0.05, W * 0.95);
+      sy = H + 20;
+      angle = rand(230, 300) * (Math.PI / 180);
+    } else {                   /* left → diagonal right */
+      sx = -20;
+      sy = rand(H * 0.0, H * 0.7);
+      angle = rand(-30, 30) * (Math.PI / 180);
+    }
 
-    /* Brighter ones occasionally get a cyan or white tint */
-    var tint = Math.random() < 0.4 ? "34,211,238" : "220,240,255";
+    var speed  = rand(7, 15);
+    var length = rand(100, 280);
+    var tint   = Math.random() < 0.45 ? "34,211,238" : "210,235,255";
 
     return {
-      x:       sx,
-      y:       sy,
-      dx:      Math.cos(angle) * speed,
-      dy:      Math.sin(angle) * speed,
-      speed:   speed,
-      length:  length,
-      alpha:   rand(0.7, 1.0),
-      decay:   rand(0.012, 0.025),
-      tint:    tint,
-      trail:   [],
-      maxT:    Math.floor(length / speed),
-      /* Glow head */
-      glowR:   rand(1.5, 3.5),
+      x: sx, y: sy,
+      dx: Math.cos(angle) * speed,
+      dy: Math.sin(angle) * speed,
+      alpha: rand(0.65, 1.0),
+      decay: rand(0.014, 0.028),
+      tint: tint,
+      trail: [],
+      maxT: Math.floor(length / speed),
+      glowR: rand(1.2, 3.2),
     };
   }
 
-  /* ── Resize / init ── */
+  /* ── Fiery meteor ── */
+  function makeMeteor() {
+    /* Always travels left-to-right across the screen, steep-ish */
+    var angle = rand(18, 42) * (Math.PI / 180);
+    var speed = rand(2.8, 5.0);
+    var startX = rand(-W * 0.3, W * 0.1);
+    var startY = rand(-H * 0.1, H * 0.35);
+    var radius = rand(10, 18);
+
+    return {
+      x: startX, y: startY,
+      dx: Math.cos(angle) * speed,
+      dy: Math.sin(angle) * speed,
+      r: radius,
+      alpha: 1.0,
+      decay: rand(0.003, 0.007),
+      trail: [],
+      maxT: 220,
+      done: false,
+    };
+  }
+
+  /* ── Nebula ── */
+  function buildNebula() {
+    nebCanvas.width  = Math.round(W * dpr);
+    nebCanvas.height = Math.round(H * dpr);
+    nebCtx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    nebCtx.clearRect(0, 0, W, H);
+
+    [
+      { x: W * 0.15, y: H * 0.20, rx: W * 0.38, ry: H * 0.32, c: "34,211,238",  a: 0.030 },
+      { x: W * 0.82, y: H * 0.75, rx: W * 0.34, ry: H * 0.32, c: "168,85,247",  a: 0.034 },
+      { x: W * 0.50, y: H * 0.50, rx: W * 0.28, ry: H * 0.25, c: "100,120,255", a: 0.018 },
+      { x: W * 0.05, y: H * 0.85, rx: W * 0.25, ry: H * 0.22, c: "34,211,238",  a: 0.016 },
+      { x: W * 0.90, y: H * 0.12, rx: W * 0.22, ry: H * 0.20, c: "168,85,247",  a: 0.020 },
+    ].forEach(function (p) {
+      var maxR = Math.max(p.rx, p.ry);
+      var scaleX = p.rx / maxR, scaleY = p.ry / maxR;
+      var grd = nebCtx.createRadialGradient(0, 0, 0, 0, 0, maxR);
+      grd.addColorStop(0,   "rgba(" + p.c + "," + p.a + ")");
+      grd.addColorStop(0.5, "rgba(" + p.c + "," + (p.a * 0.38) + ")");
+      grd.addColorStop(1,   "rgba(" + p.c + ",0)");
+      nebCtx.save();
+      nebCtx.translate(p.x, p.y);
+      nebCtx.scale(scaleX, scaleY);
+      nebCtx.beginPath();
+      nebCtx.arc(0, 0, maxR, 0, Math.PI * 2);
+      nebCtx.fillStyle = grd;
+      nebCtx.fill();
+      nebCtx.restore();
+    });
+  }
+
+  /* ── Resize ── */
   function resize() {
     dpr = Math.min(window.devicePixelRatio || 1, 2);
     W = window.innerWidth;
@@ -114,115 +172,92 @@
     canvas.style.height = H + "px";
     ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
 
-    stars     = [];
-    deepStars = [];
+    stars = [], deepStars = [];
     for (var i = 0; i < STAR_COUNT; i++) stars.push(makeStar(W, H));
-    for (var j = 0; j < DEEP_COUNT;  j++) deepStars.push(makeDeepStar(W, H));
+    for (var j = 0; j < DEEP_COUNT;  j++) deepStars.push(makeDeep(W, H));
   }
 
-  /* ── Draw deep (far) layer ── */
-  function drawDeep(ts) {
+  /* ── Draw ── */
+  function drawDeep() {
     for (var i = 0; i < deepStars.length; i++) {
       var s = deepStars[i];
       s.phase += s.speed;
-      s.alpha  = s.baseA * (0.6 + 0.4 * Math.sin(s.phase));
+      var a = s.baseA * (0.55 + 0.45 * Math.sin(s.phase));
       ctx.beginPath();
       ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
-      ctx.fillStyle = "rgba(" + s.color + "," + s.alpha.toFixed(3) + ")";
+      ctx.fillStyle = "rgba(200,220,255," + a.toFixed(3) + ")";
       ctx.fill();
     }
   }
 
-  /* ── Draw main star layer ── */
   function drawStars() {
     for (var i = 0; i < stars.length; i++) {
       var s = stars[i];
       s.phase += s.speed;
-      s.alpha  = s.baseA * (0.5 + 0.5 * Math.sin(s.phase));
+      var a = s.baseA * (0.48 + 0.52 * Math.sin(s.phase));
 
-      /* Core dot */
       ctx.beginPath();
       ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
-      ctx.fillStyle = "rgba(" + s.color + "," + s.alpha.toFixed(3) + ")";
+      ctx.fillStyle = "rgba(" + s.color + "," + a.toFixed(3) + ")";
       ctx.fill();
 
-      /* Soft glow halo on bigger/brighter stars */
-      if (s.r > 1.1 && s.alpha > 0.55) {
-        var glow = ctx.createRadialGradient(s.x, s.y, 0, s.x, s.y, s.r * 4);
-        glow.addColorStop(0, "rgba(" + s.color + "," + (s.alpha * 0.35).toFixed(3) + ")");
+      if (s.r > 1.0 && a > 0.52) {
+        var glow = ctx.createRadialGradient(s.x, s.y, 0, s.x, s.y, s.r * 4.5);
+        glow.addColorStop(0, "rgba(" + s.color + "," + (a * 0.32).toFixed(3) + ")");
         glow.addColorStop(1, "rgba(" + s.color + ",0)");
         ctx.beginPath();
-        ctx.arc(s.x, s.y, s.r * 4, 0, Math.PI * 2);
+        ctx.arc(s.x, s.y, s.r * 4.5, 0, Math.PI * 2);
         ctx.fillStyle = glow;
         ctx.fill();
       }
 
-      /* 4-point sparkle cross on the very brightest */
-      if (s.r > 1.5 && s.alpha > 0.8) {
-        var arm = s.r * 5;
-        var aw  = s.r * 0.3;
+      if (s.r > 1.55 && a > 0.78) {
+        var arm = s.r * 5.5;
         ctx.save();
-        ctx.globalAlpha = s.alpha * 0.4;
+        ctx.globalAlpha = a * 0.38;
         ctx.strokeStyle = "rgba(" + s.color + ",1)";
-        ctx.lineWidth   = aw;
-        ctx.lineCap     = "round";
-        ctx.beginPath();
-        ctx.moveTo(s.x - arm, s.y);
-        ctx.lineTo(s.x + arm, s.y);
-        ctx.stroke();
-        ctx.beginPath();
-        ctx.moveTo(s.x, s.y - arm);
-        ctx.lineTo(s.x, s.y + arm);
-        ctx.stroke();
+        ctx.lineWidth = s.r * 0.28;
+        ctx.lineCap = "round";
+        ctx.beginPath(); ctx.moveTo(s.x - arm, s.y); ctx.lineTo(s.x + arm, s.y); ctx.stroke();
+        ctx.beginPath(); ctx.moveTo(s.x, s.y - arm); ctx.lineTo(s.x, s.y + arm); ctx.stroke();
         ctx.restore();
       }
     }
   }
 
-  /* ── Draw shooting stars ── */
   function drawShoots(ts) {
-    /* Spawn new ones */
-    if (shoots.length < MAX_CONCURRENT_SHOOTS && ts - lastShoot > nextShootDelay) {
+    if (shoots.length < MAX_SHOOTS && ts - lastShoot > nextShootDelay) {
       shoots.push(makeShoot());
-      lastShoot      = ts;
-      nextShootDelay = rand(SHOOTING_MIN_MS, SHOOTING_MAX_MS);
+      lastShoot = ts;
+      nextShootDelay = rand(SHOOT_MIN_MS, SHOOT_MAX_MS);
     }
 
     for (var j = shoots.length - 1; j >= 0; j--) {
       var ss = shoots[j];
-
       ss.trail.push({ x: ss.x, y: ss.y });
       if (ss.trail.length > ss.maxT) ss.trail.shift();
-
-      ss.x += ss.dx;
-      ss.y += ss.dy;
+      ss.x += ss.dx; ss.y += ss.dy;
       ss.alpha -= ss.decay;
 
-      if (ss.alpha <= 0 || ss.x < -60 || ss.x > W + 60 || ss.y > H + 60) {
-        shoots.splice(j, 1);
-        continue;
+      var oob = ss.x < -80 || ss.x > W + 80 || ss.y < -80 || ss.y > H + 80;
+      if (ss.alpha <= 0 || oob) { shoots.splice(j, 1); continue; }
+
+      ctx.lineCap = "round";
+      for (var k = 1; k < ss.trail.length; k++) {
+        var p = k / ss.trail.length;
+        var a = ss.alpha * p * 0.85;
+        if (a <= 0.01) continue;
+        ctx.beginPath();
+        ctx.moveTo(ss.trail[k-1].x, ss.trail[k-1].y);
+        ctx.lineTo(ss.trail[k].x, ss.trail[k].y);
+        ctx.strokeStyle = "rgba(" + ss.tint + "," + a.toFixed(3) + ")";
+        ctx.lineWidth = p * 2.2;
+        ctx.stroke();
       }
 
-      /* Trail gradient */
-      if (ss.trail.length > 1) {
-        for (var k = 1; k < ss.trail.length; k++) {
-          var p   = k / ss.trail.length;
-          var a   = ss.alpha * p * 0.85;
-          if (a <= 0.01) continue;
-          ctx.beginPath();
-          ctx.moveTo(ss.trail[k - 1].x, ss.trail[k - 1].y);
-          ctx.lineTo(ss.trail[k].x, ss.trail[k].y);
-          ctx.strokeStyle = "rgba(" + ss.tint + "," + a.toFixed(3) + ")";
-          ctx.lineWidth   = p * 2.2;
-          ctx.lineCap     = "round";
-          ctx.stroke();
-        }
-      }
-
-      /* Glowing head */
       var hg = ctx.createRadialGradient(ss.x, ss.y, 0, ss.x, ss.y, ss.glowR * 3);
-      hg.addColorStop(0,   "rgba(" + ss.tint + "," + (ss.alpha * 0.9).toFixed(3) + ")");
-      hg.addColorStop(0.4, "rgba(" + ss.tint + "," + (ss.alpha * 0.3).toFixed(3) + ")");
+      hg.addColorStop(0,   "rgba(" + ss.tint + "," + (ss.alpha * 0.95).toFixed(3) + ")");
+      hg.addColorStop(0.4, "rgba(" + ss.tint + "," + (ss.alpha * 0.25).toFixed(3) + ")");
       hg.addColorStop(1,   "rgba(" + ss.tint + ",0)");
       ctx.beginPath();
       ctx.arc(ss.x, ss.y, ss.glowR * 3, 0, Math.PI * 2);
@@ -231,55 +266,78 @@
     }
   }
 
-  /* ── Nebula ambient patches (static, drawn once on resize) ── */
-  var nebulaCanvas = document.createElement("canvas");
-  var nebCtx = nebulaCanvas.getContext("2d");
+  function drawMeteors(ts) {
+    if (meteors.length === 0 && ts - lastMeteor > nextMeteorDelay) {
+      meteors.push(makeMeteor());
+      lastMeteor = ts;
+      nextMeteorDelay = rand(METEOR_MIN_MS, METEOR_MAX_MS);
+    }
 
-  function buildNebula() {
-    nebulaCanvas.width  = Math.round(W * dpr);
-    nebulaCanvas.height = Math.round(H * dpr);
-    nebCtx.setTransform(dpr, 0, 0, dpr, 0, 0);
-    nebCtx.clearRect(0, 0, W, H);
+    for (var m = meteors.length - 1; m >= 0; m--) {
+      var mt = meteors[m];
+      mt.trail.push({ x: mt.x, y: mt.y });
+      if (mt.trail.length > mt.maxT) mt.trail.shift();
+      mt.x += mt.dx; mt.y += mt.dy;
+      mt.alpha -= mt.decay;
 
-    var patches = [
-      { x: W * 0.18, y: H * 0.22, rx: W * 0.35, ry: H * 0.28, color: "34,211,238",  a: 0.028 },
-      { x: W * 0.78, y: H * 0.72, rx: W * 0.32, ry: H * 0.30, color: "168,85,247",  a: 0.032 },
-      { x: W * 0.55, y: H * 0.45, rx: W * 0.25, ry: H * 0.22, color: "100,120,255", a: 0.018 },
-      { x: W * 0.05, y: H * 0.80, rx: W * 0.28, ry: H * 0.25, color: "34,211,238",  a: 0.015 },
-    ];
+      if (mt.alpha <= 0 || mt.x > W + 100 || mt.y > H + 100) {
+        meteors.splice(m, 1); continue;
+      }
 
-    patches.forEach(function (p) {
-      var g = nebCtx.createRadialGradient(p.x, p.y, 0, p.x, p.y, Math.max(p.rx, p.ry));
-      g.addColorStop(0,   "rgba(" + p.color + "," + p.a + ")");
-      g.addColorStop(0.5, "rgba(" + p.color + "," + (p.a * 0.4) + ")");
-      g.addColorStop(1,   "rgba(" + p.color + ",0)");
-      nebCtx.save();
-      nebCtx.scale(p.rx / Math.max(p.rx, p.ry), p.ry / Math.max(p.rx, p.ry));
-      var sx = p.x / (p.rx / Math.max(p.rx, p.ry));
-      var sy = p.y / (p.ry / Math.max(p.rx, p.ry));
-      nebCtx.beginPath();
-      nebCtx.arc(sx, sy, Math.max(p.rx, p.ry), 0, Math.PI * 2);
-      nebCtx.fillStyle = g;
-      nebCtx.fill();
-      nebCtx.restore();
-    });
+      /* Fire trail — orange/yellow/red gradient */
+      ctx.save();
+      ctx.lineCap = "round";
+      for (var k = 1; k < mt.trail.length; k++) {
+        var p  = k / mt.trail.length;
+        var ta = mt.alpha * p;
+        if (ta <= 0.01) continue;
+
+        /* Colour shifts from white-hot head → orange → red → transparent */
+        var r, g, b;
+        if (p > 0.85) { r = 255; g = 240; b = 200; }       // white-yellow
+        else if (p > 0.65) { r = 255; g = 160; b = 40; }   // orange
+        else if (p > 0.4) { r = 220; g = 80; b = 20; }     // red-orange
+        else { r = 150; g = 30; b = 10; }                   // deep red
+
+        ctx.beginPath();
+        ctx.moveTo(mt.trail[k-1].x, mt.trail[k-1].y);
+        ctx.lineTo(mt.trail[k].x, mt.trail[k].y);
+        ctx.strokeStyle = "rgba(" + r + "," + g + "," + b + "," + (ta * 0.9).toFixed(3) + ")";
+        ctx.lineWidth = p * mt.r * 1.6;
+        ctx.stroke();
+      }
+      ctx.restore();
+
+      /* Glowing fireball head */
+      var layers = [
+        { r: mt.r * 3.5, c: "255,120,30",  a: mt.alpha * 0.18 },
+        { r: mt.r * 2.2, c: "255,180,60",  a: mt.alpha * 0.45 },
+        { r: mt.r * 1.2, c: "255,230,150", a: mt.alpha * 0.85 },
+        { r: mt.r * 0.5, c: "255,255,220", a: mt.alpha },
+      ];
+      layers.forEach(function (l) {
+        ctx.beginPath();
+        ctx.arc(mt.x, mt.y, l.r, 0, Math.PI * 2);
+        var rg = ctx.createRadialGradient(mt.x, mt.y, 0, mt.x, mt.y, l.r);
+        rg.addColorStop(0,   "rgba(" + l.c + "," + l.a.toFixed(3) + ")");
+        rg.addColorStop(1,   "rgba(" + l.c + ",0)");
+        ctx.fillStyle = rg;
+        ctx.fill();
+      });
+    }
   }
 
-  /* ── Main render loop ── */
+  /* ── Loop ── */
   function draw(ts) {
     ctx.clearRect(0, 0, W, H);
-
-    /* Nebula layer */
-    ctx.drawImage(nebulaCanvas, 0, 0, W, H);
-
+    ctx.drawImage(nebCanvas, 0, 0, W, H);
     drawDeep(ts);
     drawStars(ts);
     drawShoots(ts);
-
+    drawMeteors(ts);
     animId = requestAnimationFrame(draw);
   }
 
-  /* ── Init ── */
   resize();
   buildNebula();
 
@@ -288,8 +346,7 @@
     clearTimeout(resizeTimer);
     resizeTimer = setTimeout(function () {
       cancelAnimationFrame(animId);
-      resize();
-      buildNebula();
+      resize(); buildNebula();
       animId = requestAnimationFrame(draw);
     }, 150);
   });
