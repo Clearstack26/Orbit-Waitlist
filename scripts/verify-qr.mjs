@@ -82,17 +82,10 @@ try {
 try {
   const vcardPath = path.join(root, "orbit-vcard-qr.json");
   if (fs.existsSync(vcardPath)) {
-    const vcardQr = JSON.parse(fs.readFileSync(vcardPath, "utf8"));
-    if (String(vcardQr.payload || "").includes("BEGIN:VCARD") && vcardQr.payload.includes(joinUrl)) {
-      pass("vCard QR payload", `${Buffer.byteLength(vcardQr.payload, "utf8")} bytes`);
-    } else {
-      fail("vCard QR payload", "missing vCard or join URL");
-    }
-  } else {
-    fail("vCard QR payload", "run npm run build:vcf");
+    pass("vCard file present (optional)", "not used on QR page");
   }
 } catch (e) {
-  fail("vCard QR payload", e.message);
+  /* optional */
 }
 
 try {

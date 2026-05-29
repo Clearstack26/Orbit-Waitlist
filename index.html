@@ -38,35 +38,17 @@
         font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
         color: #0f0e14;
         padding: max(0.5rem, env(safe-area-inset-top))
-          max(0.75rem, env(safe-area-inset-right))
+          max(0.5rem, env(safe-area-inset-right))
           max(0.5rem, env(safe-area-inset-bottom))
-          max(0.75rem, env(safe-area-inset-left));
+          max(0.5rem, env(safe-area-inset-left));
       }
       #wrap {
         display: flex;
-        flex-direction: column;
         align-items: center;
         justify-content: center;
-        gap: clamp(0.65rem, 2.5vh, 1rem);
         width: 100%;
         height: min(100dvh, 100vh);
         max-height: 100dvh;
-      }
-      .qr-block {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        gap: 0.35rem;
-        flex: 0 1 auto;
-        min-height: 0;
-      }
-      .qr-label {
-        margin: 0;
-        font-size: 0.6875rem;
-        font-weight: 600;
-        letter-spacing: 0.12em;
-        text-transform: uppercase;
-        color: #4a4456;
       }
       canvas.qr-canvas {
         display: block;
@@ -107,38 +89,24 @@
     </style>
   </head>
   <body>
-    <a class="visually-hidden" href="/join">Join the Orbit waitlist</a>
+    <a class="visually-hidden" href="/join">Start the Orbit waitlist experience</a>
     <div id="wrap">
-      <div class="qr-block">
-        <p class="qr-label">Join waitlist</p>
-        <canvas
-          id="qr-join"
-          class="qr-canvas"
-          role="img"
-          aria-label="QR code: open Orbit waitlist signup page"
-        ></canvas>
-      </div>
-      <div class="qr-block">
-        <p class="qr-label">All phones and Android</p>
-        <canvas
-          id="qr-vcard"
-          class="qr-canvas"
-          role="img"
-          aria-label="QR code: save Orbit waitlist link on any phone"
-        ></canvas>
-      </div>
+      <canvas
+        id="qr-canvas"
+        class="qr-canvas"
+        role="img"
+        aria-label="QR code: start the Orbit waitlist experience"
+      ></canvas>
       <p id="err" class="err" hidden></p>
     </div>
     <script src="/vendor/qrcode.min.js"></script>
     <script>
       (function () {
-        var canvasJoin = document.getElementById("qr-join");
-        var canvasVcard = document.getElementById("qr-vcard");
+        var canvas = document.getElementById("qr-canvas");
         var errEl = document.getElementById("err");
 
         function showErr(msg) {
-          canvasJoin.hidden = true;
-          canvasVcard.hidden = true;
+          canvas.hidden = true;
           errEl.hidden = false;
           errEl.textContent = msg;
         }
@@ -162,17 +130,6 @@
           return baseOrigin + joinPath;
         }
 
-        function loadJson(url) {
-          return fetch(url, { cache: "no-store" }).then(function (r) {
-            if (!r.ok) throw new Error(url);
-            return r.json();
-          });
-        }
-
-        function qrColors() {
-          return { dark: "#000000", light: "#ffffff" };
-        }
-
         function viewportSize() {
           if (window.visualViewport) {
             return {
@@ -188,79 +145,56 @@
           var edge = 12;
           var usableW = v.w - edge * 2;
           var usableH = v.h - edge * 2;
-          var perQr = usableH * 0.38;
-          var side = Math.floor(Math.min(usableW, perQr) * 0.94);
-          return Math.max(128, Math.min(side, 280));
+          var side = Math.floor(Math.min(usableW, usableH) * 0.94);
+          return Math.max(160, Math.min(side, 420));
         }
 
-        function drawCanvas(canvas, payload, titleAttr, ecLevel) {
-          return new Promise(function (resolve, reject) {
-            if (typeof QRCode === "undefined" || !QRCode.toCanvas) {
-              reject(new Error("QR library"));
-              return;
-            }
-            var cssSize = qrCssPixelSize();
-            var dpr = Math.min(window.devicePixelRatio || 1, 3);
-            var genSize = Math.round(cssSize * dpr);
+        function drawQr(url) {
+          if (typeof QRCode === "undefined" || !QRCode.toCanvas) {
+            showErr("QR library not loaded. Run npm run build and refresh.");
+            return;
+          }
 
-            QRCode.toCanvas(
-              canvas,
-              payload,
-              {
-                width: genSize,
-                margin: 2,
-                errorCorrectionLevel: ecLevel || "M",
-                color: qrColors(),
-              },
-              function (e) {
-                if (e) {
-                  reject(e);
-                  return;
-                }
-                canvas.hidden = false;
-                canvas.style.width = cssSize + "px";
-                canvas.style.height = cssSize + "px";
-                if (titleAttr) canvas.setAttribute("title", titleAttr);
-                canvas.dataset.payloadType =
-                  payload.indexOf("BEGIN:VCARD") === 0 ? "vcard" : "url";
-                resolve();
+          var cssSize = qrCssPixelSize();
+          var dpr = Math.min(window.devicePixelRatio || 1, 3);
+          var genSize = Math.round(cssSize * dpr);
+
+          QRCode.toCanvas(
+            canvas,
+            url,
+            {
+              width: genSize,
+              margin: 2,
+              errorCorrectionLevel: "H",
+              color: { dark: "#000000", light: "#ffffff" },
+            },
+            function (e) {
+              if (e) {
+                showErr("Could not generate QR code.");
+                return;
               }
-            );
-          });
+              canvas.hidden = false;
+              canvas.style.width = cssSize + "px";
+              canvas.style.height = cssSize + "px";
+              canvas.setAttribute("title", "Orbit waitlist: " + url);
+              canvas.dataset.url = url;
+            }
+          );
         }
 
         function run() {
-          Promise.all([
-            loadJson("/site-config.json"),
-            loadJson("/orbit-vcard-qr.json"),
-          ])
-            .then(function (results) {
-              var cfg = results[0];
-              var vcardQr = results[1];
-              var joinUrl = resolveJoinUrl(cfg);
-              var vcardPayload = String(vcardQr.payload || "").trim();
-              if (!vcardPayload) throw new Error("vcard");
-
+          fetch("/site-config.json", { cache: "no-store" })
+            .then(function (r) {
+              if (!r.ok) throw new Error("config");
+              return r.json();
+            })
+            .then(function (cfg) {
               errEl.hidden = true;
-              return Promise.all([
-                drawCanvas(
-                  canvasJoin,
-                  joinUrl,
-                  "Join waitlist: " + joinUrl,
-                  "M"
-                ),
-                drawCanvas(
-                  canvasVcard,
-                  vcardPayload,
-                  "Works on all phones including Android",
-                  "H"
-                ),
-              ]);
+              drawQr(resolveJoinUrl(cfg));
             })
             .catch(function () {
-              showErr(
-                "Could not load QR data. Run npm run build:vcf and refresh."
-              );
+              errEl.hidden = true;
+              drawQr(window.location.origin + "/join");
             });
         }
 
