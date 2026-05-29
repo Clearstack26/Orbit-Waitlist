@@ -246,6 +246,7 @@ body::after {
    ════════════════════════════════════════════ */
 
 .intro-step {
+  position: relative;
   align-items: center;
   justify-content: center;
   padding: max(2rem, env(safe-area-inset-top))
@@ -277,10 +278,15 @@ body::after {
 }
 
 .intro-trust {
-  margin: -0.35rem 0 0;
-  font-size: clamp(0.75rem, 3vw, 0.8125rem);
+  position: absolute;
+  bottom: max(1.5rem, calc(env(safe-area-inset-bottom) + 1rem));
+  left: 0;
+  right: 0;
+  text-align: center;
+  margin: 0;
+  font-size: clamp(0.72rem, 2.8vw, 0.8rem);
   font-weight: 600;
-  letter-spacing: 0.06em;
+  letter-spacing: 0.07em;
   text-transform: uppercase;
   color: var(--ink-muted);
 }
@@ -329,7 +335,7 @@ body::after {
     animation: fade-up 0.55s 0.68s ease-out both;
   }
   .intro-step .intro-trust {
-    animation: fade-up 0.55s 0.78s ease-out both;
+    animation: fade-up 0.5s 1.1s ease-out both;
   }
   .intro-step .btn-enter {
     animation:
