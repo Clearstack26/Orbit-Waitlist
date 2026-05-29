@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="color-scheme" content="dark" />
+    <meta name="theme-color" content="#04040f" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <title>Join the Orbit Waitlist</title>
+    <meta name="description" content="Be the first to know when Orbit launches on iOS and Android. Join the waitlist now." />
+    <meta property="og:title" content="Join the Orbit Waitlist" />
+    <meta property="og:description" content="Be the first to know when Orbit launches. Sign up for early access." />
+    <meta property="og:type" content="website" />
+    <link rel="manifest" href="/manifest.webmanifest" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <canvas id="stars-canvas" aria-hidden="true"></canvas>
+
+    <main class="page" id="main">
+      <div class="form-page">
+
+        <!-- Logo -->
+        <div class="orbit-logo fade-up" style="margin-bottom: clamp(1.25rem, 3.5vh, 2rem);">
+          <img
+            src="/assets/logo-white.png"
+            alt="Orbit"
+            class="orbit-logo__img"
+          />
+        </div>
+
+        <!-- Heading -->
+        <h1 class="form-heading fade-up-delay-1">Join the Waitlist</h1>
+        <p class="form-subheading fade-up-delay-1">
+          Be the first to know when Orbit launches<br />on iOS &amp; Android.
+        </p>
+
+        <!-- Live badge -->
+        <div style="display:flex; justify-content:center;">
+          <span class="waitlist-count fade-up-delay-2" aria-label="Waitlist is open">
+            <span class="waitlist-count__dot" aria-hidden="true"></span>
+            Waitlist open
+          </span>
+        </div>
+
+        <!-- Form card -->
+        <div class="form-card fade-up-delay-2">
+
+          <!-- Error / duplicate banners -->
+          <div id="form-banner" class="form-banner" role="alert" aria-live="polite"></div>
+
+          <!-- Form state -->
+          <div id="form-state" class="form-state">
+            <form id="waitlist-form" novalidate aria-label="Waitlist signup">
+              <div class="form-group">
+                <label class="form-label" for="field-name">First name</label>
+                <input
+                  id="field-name"
+                  name="name"
+                  type="text"
+                  class="form-input"
+                  placeholder="Your name"
+                  autocomplete="given-name"
+                  spellcheck="false"
+                  required
+                  minlength="2"
+                  maxlength="80"
+                />
+                <span id="err-name" class="form-field-error" role="alert"></span>
+              </div>
+
+              <div class="form-group">
+                <label class="form-label" for="field-email">Email address</label>
+                <input
+                  id="field-email"
+                  name="email"
+                  type="email"
+                  class="form-input"
+                  placeholder="you@example.com"
+                  autocomplete="email"
+                  spellcheck="false"
+                  required
+                  maxlength="254"
+                />
+                <span id="err-email" class="form-field-error" role="alert"></span>
+              </div>
+
+              <button type="submit" class="btn-submit" id="btn-submit">
+                <span class="btn-submit__text">Reserve my spot</span>
+                <span class="btn-submit__spinner" aria-hidden="true"></span>
+              </button>
+            </form>
+          </div>
+
+          <!-- Success state -->
+          <div id="success-state" class="success-state" role="status" aria-live="polite">
+            <div class="success-icon" aria-hidden="true">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="20 6 9 17 4 12"></polyline>
+              </svg>
+            </div>
+            <h2 class="success-title">You're on the list!</h2>
+            <p class="success-text">
+              We'll send you an email the moment Orbit is ready to download. Keep an eye on your inbox.
+            </p>
+          </div>
+
+        </div>
+        <!-- /form-card -->
+
+        <p style="margin-top:1.25rem; text-align:center; font-size:0.75rem; color:var(--ink-subtle);">
+          No spam. Unsubscribe any time.
+        </p>
+
+      </div>
+    </main>
+
+    <footer class="page-footer">
+      orbit &nbsp;·&nbsp; coming soon
+    </footer>
+
+    <script src="/stars.js"></script>
+    <script src="/form.js"></script>
+  </body>
+</html>

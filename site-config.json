@@ -1,0 +1,10 @@
+{
+  "baseUrl": "https://your-orbit-waitlist.vercel.app",
+  "joinPath": "/join",
+  "name": "Orbit",
+  "tagline": "Coming soon.",
+  "supabase": {
+    "url": "https://siaktnkaavgefjxgprrf.supabase.co",
+    "anonKey": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNpYWt0bmthYXZnZWZqeGdwcnJmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzI3ODU2OTIsImV4cCI6MjA4ODM2MTY5Mn0.-MREUEW3FK_dsRjZcrjZ17w2k0W9Ik1RBAF4pnMKw4M"
+  }
+}

@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, maximum-scale=1" />
+    <meta name="color-scheme" content="dark" />
+    <meta name="robots" content="noindex, nofollow" />
+    <meta name="theme-color" content="#04040f" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <title>Orbit — Join the Waitlist</title>
+    <link rel="manifest" href="/manifest.webmanifest" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <canvas id="stars-canvas" aria-hidden="true"></canvas>
+
+    <main class="page" id="main">
+      <div class="qr-wrap fade-up">
+        <div class="orbit-logo fade-up">
+          <img
+            src="/assets/logo-white.png"
+            alt="Orbit"
+            class="orbit-logo__img"
+          />
+        </div>
+
+        <p class="qr-label fade-up-delay-1">Scan to join the waitlist</p>
+
+        <div class="qr-frame fade-up-delay-1">
+          <canvas
+            id="qr-canvas"
+            class="qr-canvas"
+            role="img"
+            aria-label="QR code — scan to sign up for the Orbit waitlist"
+          ></canvas>
+        </div>
+
+        <p class="qr-cta fade-up-delay-2">Be first. Join Orbit.</p>
+        <p class="qr-sub fade-up-delay-3">Launching soon on iOS &amp; Android</p>
+
+        <p id="qr-err" class="err" hidden></p>
+      </div>
+    </main>
+
+    <footer class="page-footer" aria-label="Footer">
+      orbit &nbsp;·&nbsp; coming soon
+    </footer>
+
+    <script src="/vendor/qrcode.min.js"></script>
+    <script src="/stars.js"></script>
+    <script>
+      (function () {
+        var canvas = document.getElementById("qr-canvas");
+        var errEl = document.getElementById("qr-err");
+
+        function showErr(msg) {
+          if (canvas) canvas.hidden = true;
+          errEl.hidden = false;
+          errEl.textContent = msg;
+        }
+
+        function viewportSize() {
+          if (window.visualViewport) {
+            return { w: window.visualViewport.width, h: window.visualViewport.height };
+          }
+          return { w: window.innerWidth, h: window.innerHeight };
+        }
+
+        function qrCssPixelSize() {
+          var v = viewportSize();
+          var padding = 32;
+          var usableW = v.w - padding * 2;
+          var usableH = v.h - padding * 2;
+          var side = Math.floor(Math.min(usableW * 0.82, usableH * 0.52));
+          return Math.max(180, Math.min(side, 300));
+        }
+
+        function drawQr(url) {
+          if (typeof QRCode === "undefined" || !QRCode.toCanvas) {
+            showErr("QR library not loaded. Run npm run build and refresh.");
+            return;
+          }
+          var cssSize = qrCssPixelSize();
+          var dpr = Math.min(window.devicePixelRatio || 1, 3);
+          var genSize = Math.round(cssSize * dpr);
+
+          QRCode.toCanvas(
+            canvas,
+            url,
+            {
+              width: genSize,
+              margin: 2,
+              errorCorrectionLevel: "M",
+              color: { dark: "#04040f", light: "#ffffff" },
+            },
+            function (err) {
+              if (err) { showErr("Could not generate QR code."); return; }
+              canvas.hidden = false;
+              canvas.style.width = cssSize + "px";
+              canvas.style.height = cssSize + "px";
+            }
+          );
+        }
+
+        function run() {
+          fetch("/site-config.json", { cache: "no-store" })
+            .then(function (r) {
+              if (!r.ok) throw new Error("config");
+              return r.json();
+            })
+            .then(function (cfg) {
+              var base = String(cfg.baseUrl || "").trim();
+              var placeholder = "your-orbit-waitlist.vercel.app";
+              if (!base || base.indexOf(placeholder) !== -1) {
+                base = window.location.origin;
+              }
+              base = base.replace(/\/$/, "");
+              var joinPath = String(cfg.joinPath || "/join").trim();
+              if (!joinPath.startsWith("/")) joinPath = "/" + joinPath;
+              drawQr(base + joinPath);
+            })
+            .catch(function () {
+              drawQr(window.location.origin + "/join");
+            });
+        }
+
+        run();
+
+        var resizeTimer;
+        function onResize() {
+          clearTimeout(resizeTimer);
+          resizeTimer = setTimeout(run, 120);
+        }
+        window.addEventListener("resize", onResize);
+        window.addEventListener("orientationchange", function () { setTimeout(run, 250); });
+        if (window.visualViewport) {
+          window.visualViewport.addEventListener("resize", onResize);
+        }
+      })();
+    </script>
+  </body>
+</html>

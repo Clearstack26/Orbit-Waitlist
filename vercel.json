@@ -1,0 +1,13 @@
+{
+  "rewrites": [
+    { "source": "/join", "destination": "/join.html" }
+  ],
+  "headers": [
+    {
+      "source": "/site-config.json",
+      "headers": [
+        { "key": "Cache-Control", "value": "no-store" }
+      ]
+    }
+  ]
+}
