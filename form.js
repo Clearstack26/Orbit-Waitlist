@@ -188,7 +188,8 @@
     if (currentStep === STEP_SOLUTION) return;
     var dx = e.changedTouches[0].clientX - touchX;
     var dy = e.changedTouches[0].clientY - touchY;
-    if (Math.abs(dx) < 50 || Math.abs(dx) < Math.abs(dy)) return;
+    /* Require a clear horizontal intent: 80px+ and at least 2× the vertical movement */
+    if (Math.abs(dx) < 80 || Math.abs(dx) < Math.abs(dy) * 2) return;
     if (dx < 0 && currentStep < SLIDE_LAST) {
       goTo(currentStep + 1, "fwd");
     } else if (dx > 0 && currentStep > SLIDE_FIRST) {
