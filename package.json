@@ -2,11 +2,13 @@
   "name": "orbit-waitlist",
   "private": true,
   "version": "1.0.0",
-  "description": "Orbit waitlist — static web app",
+  "description": "Orbit waitlist. Static web app.",
   "scripts": {
     "vendor:qrcode": "esbuild node_modules/qrcode/lib/browser.js --bundle --platform=browser --format=iife --global-name=QRCode --minify --outfile=vendor/qrcode.min.js",
-    "build": "npm run vendor:qrcode",
-    "vercel-build": "npm run vendor:qrcode",
+    "build:vcf": "node scripts/build-orbit-vcard.mjs",
+    "build": "npm run build:vcf && npm run vendor:qrcode",
+    "verify:qr": "node scripts/verify-qr.mjs",
+    "vercel-build": "npm run build",
     "start": "serve . -l 3000",
     "dev": "serve . -l 3000"
   },

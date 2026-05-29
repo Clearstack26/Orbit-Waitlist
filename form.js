@@ -1,34 +1,30 @@
 /**
- * Orbit Waitlist — step manager + swipe + form submission.
+ * Orbit Waitlist: step manager, swipe, and form submission.
  */
 (function () {
 
-  /* ── Step constants ── */
   var STEP_INTRO    = 0;
   var STEP_PROBLEM  = 1;
-  var STEP_SOLUTION = 2;
-  var STEP_OUTCOME  = 3;
-  var STEP_FORM     = 4;
-  var STEP_SUCCESS  = 5;
+  var STEP_MESS     = 2;
+  var STEP_COST     = 3;
+  var STEP_VOICE    = 4;
+  var STEP_SCAN     = 5;
+  var STEP_FOLLOW   = 6;
+  var STEP_OUTCOME  = 7;
+  var STEP_FORM     = 8;
+  var STEP_SUCCESS  = 9;
 
-  /* Slide range (steps where swipe / skip / dots are active) */
   var SLIDE_FIRST = STEP_PROBLEM;
   var SLIDE_LAST  = STEP_OUTCOME;
 
   var currentStep   = STEP_INTRO;
   var transitioning = false;
 
-  /* ── Supabase ── */
   var SUPABASE_URL      = "";
   var SUPABASE_ANON_KEY = "";
 
-  /* ── Elements ── */
   var btnEnter  = document.getElementById("btn-enter");
-  var btnNext1  = document.getElementById("btn-next-1");
-  var btnNext2  = document.getElementById("btn-next-2");
-  var btnNext3  = document.getElementById("btn-next-3");
   var btnSkip   = document.getElementById("btn-skip");
-
   var form      = document.getElementById("waitlist-form");
   var btnSubmit = document.getElementById("btn-submit");
   var bannerEl  = document.getElementById("form-banner");
@@ -41,12 +37,33 @@
   var errName      = document.getElementById("err-name");
   var errEmail     = document.getElementById("err-email");
 
-  /* ── Step element helper ── */
   function el(n) { return document.getElementById("step-" + n); }
 
-  /* ── Directional transition ──
-     direction: "fwd" (→) or "back" (←)
-  ── */
+  function buildProgressDots() {
+    document.querySelectorAll(".progress-dots").forEach(function (container) {
+      if (container.children.length) return;
+      for (var i = SLIDE_FIRST; i <= SLIDE_LAST; i++) {
+        var dot = document.createElement("div");
+        dot.className = "progress-dot";
+        dot.setAttribute("data-goto", String(i));
+        dot.setAttribute("role", "button");
+        dot.setAttribute("tabindex", "0");
+        dot.setAttribute("aria-label", "Slide " + (i - SLIDE_FIRST + 1));
+        container.appendChild(dot);
+      }
+    });
+  }
+
+  function updateProgressDots() {
+    document.querySelectorAll(".progress-dots").forEach(function (container) {
+      var slideStep = currentStep;
+      container.querySelectorAll(".progress-dot").forEach(function (dot) {
+        var target = parseInt(dot.getAttribute("data-goto"), 10);
+        dot.classList.toggle("is-active", target === slideStep);
+      });
+    });
+  }
+
   function goTo(next, direction) {
     if (transitioning || next === currentStep) return;
     if (next < 0 || next > STEP_SUCCESS) return;
@@ -57,27 +74,22 @@
     var dest = el(next);
     if (!dest) { transitioning = false; return; }
 
-    /* Mark dest starting position before activating */
-    if (next >= STEP_PROBLEM && next <= STEP_OUTCOME) {
+    if (next >= SLIDE_FIRST && next <= SLIDE_LAST) {
       if (dir === "back") {
         dest.classList.add("from-left");
       }
-      /* fwd: dest stays at default (translateX(32px)) */
     }
 
-    /* Exit current */
     if (cur) {
       cur.classList.remove("is-active");
       cur.classList.add(dir === "back" ? "is-exit-back" : "is-exit-fwd");
     }
 
-    /* Brief delay so exit starts before enter */
     setTimeout(function () {
       if (cur) {
         cur.classList.remove("is-exit-fwd", "is-exit-back");
       }
 
-      /* Remove entry offset then activate */
       dest.classList.remove("from-left");
       dest.classList.add("is-active");
 
@@ -85,9 +97,9 @@
       transitioning = false;
 
       updateSkip();
+      updateProgressDots();
       scrollTop(dest);
 
-      /* Focus first interactive element */
       var first = dest.querySelector("button:not([tabindex='-1']), input, textarea");
       if (first) setTimeout(function () { first.focus({ preventScroll: true }); }, 80);
     }, 160);
@@ -97,35 +109,51 @@
     if (stepEl) stepEl.scrollTop = 0;
   }
 
-  /* ── Skip button visibility ── */
   function updateSkip() {
     if (!btnSkip) return;
-    var onSlide = currentStep >= SLIDE_FIRST && currentStep <= SLIDE_LAST;
-    btnSkip.classList.toggle("is-visible", onSlide);
+    var skippable = currentStep === STEP_INTRO ||
+      (currentStep >= SLIDE_FIRST && currentStep <= SLIDE_LAST);
+    btnSkip.classList.toggle("is-visible", skippable);
   }
 
-  /* ── Button wiring ── */
-  if (btnEnter) btnEnter.addEventListener("click", function () { goTo(STEP_PROBLEM, "fwd");  });
-  if (btnNext1) btnNext1.addEventListener("click", function () { goTo(STEP_SOLUTION, "fwd"); });
-  if (btnNext2) btnNext2.addEventListener("click", function () { goTo(STEP_OUTCOME, "fwd");  });
-  if (btnNext3) btnNext3.addEventListener("click", function () { goTo(STEP_FORM, "fwd");     });
-  if (btnSkip)  btnSkip.addEventListener("click",  function () { goTo(STEP_FORM, "fwd");     });
+  if (btnEnter) {
+    btnEnter.addEventListener("click", function () { goTo(STEP_PROBLEM, "fwd"); });
+  }
 
-  /* ── Clickable progress dots ── */
-  document.querySelectorAll(".progress-dot[data-goto]").forEach(function (dot) {
-    function activate() {
+  if (btnSkip) {
+    btnSkip.addEventListener("click", function () { goTo(STEP_FORM, "fwd"); });
+  }
+
+  document.querySelectorAll("[data-next]").forEach(function (btn) {
+    btn.addEventListener("click", function () {
+      var target = parseInt(btn.getAttribute("data-next"), 10);
+      if (isNaN(target)) return;
+      var dir = target < currentStep ? "back" : "fwd";
+      goTo(target, dir);
+    });
+  });
+
+  document.addEventListener("click", function (e) {
+    var dot = e.target.closest(".progress-dot[data-goto]");
+    if (!dot) return;
+    var target = parseInt(dot.getAttribute("data-goto"), 10);
+    if (isNaN(target)) return;
+    var dir = target < currentStep ? "back" : "fwd";
+    goTo(target, dir);
+  });
+
+  document.addEventListener("keydown", function (e) {
+    var dot = e.target.closest(".progress-dot[data-goto]");
+    if (!dot) return;
+    if (e.key === "Enter" || e.key === " ") {
+      e.preventDefault();
       var target = parseInt(dot.getAttribute("data-goto"), 10);
       if (isNaN(target)) return;
       var dir = target < currentStep ? "back" : "fwd";
       goTo(target, dir);
     }
-    dot.addEventListener("click", activate);
-    dot.addEventListener("keydown", function (e) {
-      if (e.key === "Enter" || e.key === " ") { e.preventDefault(); activate(); }
-    });
   });
 
-  /* ── Touch / swipe (slides only) ── */
   var touchX = 0, touchY = 0;
 
   document.addEventListener("touchstart", function (e) {
@@ -137,24 +165,22 @@
     if (currentStep < SLIDE_FIRST || currentStep > SLIDE_LAST) return;
     var dx = e.changedTouches[0].clientX - touchX;
     var dy = e.changedTouches[0].clientY - touchY;
-    /* Only fire if horizontal swipe is dominant and > 50px */
     if (Math.abs(dx) < 50 || Math.abs(dx) < Math.abs(dy)) return;
 
     if (dx < 0 && currentStep < SLIDE_LAST) {
-      /* Swipe left → next */
       goTo(currentStep + 1, "fwd");
     } else if (dx > 0 && currentStep > SLIDE_FIRST) {
-      /* Swipe right → back */
       goTo(currentStep - 1, "back");
     }
   }, { passive: true });
 
-  /* ── Form validation ── */
   function clearErrors() {
     nameInput.classList.remove("is-error");
     emailInput.classList.remove("is-error");
-    errName.textContent  = ""; errName.classList.remove("is-visible");
-    errEmail.textContent = ""; errEmail.classList.remove("is-visible");
+    errName.textContent  = "";
+    errName.classList.remove("is-visible");
+    errEmail.textContent = "";
+    errEmail.classList.remove("is-visible");
     bannerEl.className   = "form-banner";
     bannerEl.textContent = "";
   }
@@ -188,7 +214,6 @@
     bannerEl.textContent = msg;
   }
 
-  /* ── Supabase submit ── */
   function submitToSupabase(payload) {
     return fetch(SUPABASE_URL + "/rest/v1/orbit_waitlist", {
       method: "POST",
@@ -209,7 +234,10 @@
     });
   }
 
-  /* ── Boot: load config then wire form ── */
+  buildProgressDots();
+  updateSkip();
+  updateProgressDots();
+
   fetch("/site-config.json", { cache: "no-store" })
     .then(function (r) { return r.ok ? r.json() : null; })
     .then(function (cfg) {
@@ -264,7 +292,7 @@
             showBanner(
               isDupe ? "is-duplicate" : "is-error",
               isDupe
-                ? "You're already on the list! We'll be in touch when Orbit launches."
+                ? "You are already on the list. We will be in touch when Orbit launches."
                 : "Something went wrong. Please try again in a moment."
             );
           })
