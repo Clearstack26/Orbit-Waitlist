@@ -71,6 +71,11 @@
     if (next < 0 || next > STEP_SUCCESS) return;
     transitioning = true;
 
+    /* Failsafe: guarantee only one step is ever active at a time */
+    document.querySelectorAll(".step.is-active").forEach(function (s) {
+      if (s.id !== "step-" + currentStep) s.classList.remove("is-active");
+    });
+
     // Shooting star on every slide change
     if (typeof window.orbitShoot === "function") window.orbitShoot();
 
