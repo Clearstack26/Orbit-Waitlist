@@ -249,9 +249,9 @@ body::after {
   position: relative;
   align-items: center;
   justify-content: center;
-  padding: max(2rem, env(safe-area-inset-top))
+  padding: max(10vh, calc(env(safe-area-inset-top) + 2rem))
            max(1.25rem, env(safe-area-inset-right))
-           max(4rem, calc(env(safe-area-inset-bottom) + 3rem))
+           max(3rem, calc(env(safe-area-inset-bottom) + 2rem))
            max(1.25rem, env(safe-area-inset-left));
 }
 
@@ -263,7 +263,6 @@ body::after {
   gap: clamp(1rem, 2.5vh, 1.4rem);
   max-width: 22rem;
   width: 100%;
-  padding-bottom: clamp(2rem, 5vh, 2.8rem);
 }
 
 /* .intro-wordmark removed — wordmark now lives inside the orbital center */
