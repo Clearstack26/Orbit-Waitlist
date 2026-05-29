@@ -29,12 +29,10 @@
 
   var SS_KEY = "orbit_form";
 
-  var nameInput    = document.getElementById("field-name");
-  var emailInput   = document.getElementById("field-email");
-  var featureInput = document.getElementById("field-feature");
-  var painInput    = document.getElementById("field-pain");
-  var errName      = document.getElementById("err-name");
-  var errEmail     = document.getElementById("err-email");
+  var nameInput  = document.getElementById("field-name");
+  var emailInput = document.getElementById("field-email");
+  var errName    = document.getElementById("err-name");
+  var errEmail   = document.getElementById("err-email");
 
   function el(n) { return document.getElementById("step-" + n); }
 
@@ -258,10 +256,8 @@
   function saveFormState() {
     try {
       sessionStorage.setItem(SS_KEY, JSON.stringify({
-        name:    nameInput    ? nameInput.value    : "",
-        email:   emailInput   ? emailInput.value   : "",
-        pain:    painInput    ? painInput.value    : "",
-        feature: featureInput ? featureInput.value : "",
+        name:  nameInput  ? nameInput.value  : "",
+        email: emailInput ? emailInput.value : "",
       }));
     } catch (e) {}
   }
@@ -271,10 +267,8 @@
       var raw = sessionStorage.getItem(SS_KEY);
       if (!raw) return;
       var d = JSON.parse(raw);
-      if (nameInput    && d.name)    nameInput.value    = d.name;
-      if (emailInput   && d.email)   emailInput.value   = d.email;
-      if (painInput    && d.pain)    painInput.value    = d.pain;
-      if (featureInput && d.feature) featureInput.value = d.feature;
+      if (nameInput  && d.name)  nameInput.value  = d.name;
+      if (emailInput && d.email) emailInput.value = d.email;
     } catch (e) {}
   }
 
@@ -282,7 +276,7 @@
     try { sessionStorage.removeItem(SS_KEY); } catch (e) {}
   }
 
-  [nameInput, emailInput, painInput, featureInput].forEach(function (el) {
+  [nameInput, emailInput].forEach(function (el) {
     if (el) el.addEventListener("input", saveFormState);
   });
 
@@ -311,10 +305,8 @@
         e.preventDefault();
         clearErrors();
 
-        var name    = nameInput.value;
-        var email   = emailInput.value;
-        var pain    = painInput    ? painInput.value.trim()    : "";
-        var feature = featureInput ? featureInput.value.trim() : "";
+        var name  = nameInput.value;
+        var email = emailInput.value;
 
         if (!validate(name, email)) {
           var first = form.querySelector(".is-error");
@@ -333,8 +325,6 @@
           name:  name.trim(),
           email: email.trim().toLowerCase(),
         };
-        if (pain)    payload.pain_point      = pain;
-        if (feature) payload.feature_request = feature;
 
         submitToSupabase(payload)
           .then(function (result) {

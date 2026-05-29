@@ -174,6 +174,11 @@
           <h1 class="form-heading">Secure your spot.</h1>
           <p class="form-subheading">Be first in. Founding members get early access and a say in what we build.</p>
 
+          <p class="form-social-proof">
+            <span class="form-social-proof__dot" aria-hidden="true"></span>
+            Join 240+ people already waiting
+          </p>
+
           <div class="form-card">
             <div id="form-banner" class="form-banner" role="alert" aria-live="polite"></div>
 
@@ -188,32 +193,12 @@
                   <span id="err-name" class="form-field-error" role="alert"></span>
                 </div>
 
-                <div class="form-group">
+                <div class="form-group form-group--last">
                   <label class="form-label" for="field-email">Email address</label>
                   <input id="field-email" name="email" type="email" class="form-input"
                     placeholder="you@example.com" autocomplete="email"
                     spellcheck="false" required maxlength="254" />
                   <span id="err-email" class="form-field-error" role="alert"></span>
-                </div>
-
-                <div class="form-group">
-                  <label class="form-label" for="field-pain">
-                    What is your biggest networking headache?
-                    <span class="optional">(optional)</span>
-                  </label>
-                  <textarea id="field-pain" name="pain_point" class="form-textarea"
-                    placeholder="e.g. I always forget to follow up after events..."
-                    rows="2" maxlength="400"></textarea>
-                </div>
-
-                <div class="form-group form-group--last">
-                  <label class="form-label" for="field-feature">
-                    Any features you would love to see?
-                    <span class="optional">(optional)</span>
-                  </label>
-                  <textarea id="field-feature" name="feature_request" class="form-textarea"
-                    placeholder="e.g. LinkedIn sync, team contact sharing..."
-                    rows="2" maxlength="400"></textarea>
                 </div>
 
                 <button type="submit" class="btn-submit" id="btn-submit">
