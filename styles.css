@@ -583,23 +583,27 @@ body::after {
 }
 
 .problem-beat {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  border-left: 2px solid var(--purple-mid);
+  padding-left: 0.75rem;
+}
+
+.problem-beat__label {
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+  color: var(--purple-mid);
+}
+
+.problem-beat__text {
   margin: 0;
   font-size: clamp(0.9rem, 3.4vw, 1rem);
   font-weight: 500;
-  color: var(--ink-muted);
+  color: var(--ink);
   line-height: 1.65;
-}
-
-.problem-beat--3 {
-  color: var(--ink-soft);
-  border-left: 2px solid var(--purple-mid);
-  padding-left: 0.75rem;
-}
-
-.problem-beat--4 {
-  color: var(--ink-soft);
-  border-left: 2px solid var(--purple-mid);
-  padding-left: 0.75rem;
 }
 
 /* ─── Problem slide entrance animations ─── */
@@ -1254,7 +1258,7 @@ body.page-qr::after { display: none; }
   .slide-heading { font-size: clamp(1.75rem, 3.5vw, 2.1rem); }
   .problem-line  { font-size: clamp(1.8rem, 4vw, 2.35rem); }
   .problem-beats { max-width: 28rem; }
-  .problem-beat  { font-size: 0.9375rem; }
+  .problem-beat__text { font-size: 0.9375rem; }
 
   /* Solution steps: slightly more generous */
   .orbit-step__num          { font-size: 1.85rem; }
@@ -1327,7 +1331,7 @@ body.page-qr::after { display: none; }
   .problem-slide .slide-nav         { grid-area: nav; margin-top: 0; }
 
   .problem-line  { font-size: clamp(2rem, 3vw, 2.6rem); }
-  .problem-beat  { font-size: 1rem; }
+  .problem-beat__text { font-size: 1rem; }
 
   /* ── Solution slide: wider single column ── */
   .solution-slide .slide-content { max-width: 52rem; }
