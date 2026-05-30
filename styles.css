@@ -1009,12 +1009,15 @@ body::after {
   text-align: center;
   gap: 1.1rem;
   max-width: 22rem;
+  width: 100%;
+  margin: auto;
 }
 
 .success-logo {
   height: clamp(5.5rem, 22vw, 8rem);
   width: auto;
   object-fit: contain;
+  margin-bottom: 0.25rem;
 }
 
 .success-title {
@@ -1028,19 +1031,20 @@ body::after {
 }
 
 .success-sub {
-  margin: 0;
+  margin: -0.5rem 0 0;
   font-size: clamp(1rem, 3.5vw, 1.125rem);
   font-weight: 600;
   font-style: italic;
   color: var(--purple-mid);
   letter-spacing: 0.01em;
 }
+
 .success-text {
-  margin: 0;
+  margin: 0.5rem 0 0;
   font-size: 1rem;
   font-weight: 500;
-  color: var(--ink);
-  line-height: 1.55;
+  color: var(--ink-soft);
+  line-height: 1.6;
   max-width: 22rem;
 }
 
@@ -1241,8 +1245,9 @@ body.page-qr::after { display: none; }
   .form-heading { font-size: clamp(1.9rem, 3.5vw, 2.4rem); }
 
   /* Success */
-  .success-stack { max-width: 28rem; gap: 1.4rem; }
+  .success-stack { max-width: 28rem; gap: 1.25rem; }
   .success-title { font-size: clamp(1.8rem, 3.5vw, 2.4rem); }
+  .success-sub   { font-size: 1.1rem; }
   .success-logo  { height: clamp(6rem, 15vw, 9rem); }
 }
 
@@ -1317,10 +1322,11 @@ body.page-qr::after { display: none; }
   .form-card   { padding: 2rem 2.25rem; }
 
   /* ── Success ── */
-  .success-stack { max-width: 34rem; gap: 1.75rem; }
+  .success-stack { max-width: 34rem; gap: 1.5rem; }
   .success-title { font-size: clamp(2.2rem, 3vw, 3rem); }
-  .success-text  { font-size: 1.125rem; max-width: 28rem; }
-  .success-logo  { height: clamp(7rem, 12vw, 10rem); }
+  .success-sub   { font-size: 1.25rem; }
+  .success-text  { font-size: 1.125rem; max-width: 30rem; }
+  .success-logo  { height: clamp(7rem, 12vw, 10rem); margin-bottom: 0.5rem; }
 
   /* Back button: nudge inward on desktop */
   .btn-back {
@@ -1344,5 +1350,6 @@ body.page-qr::after { display: none; }
   .slide-heading { font-size: 2.3rem; }
 
   .success-title { font-size: 3.2rem; }
+  .success-sub   { font-size: 1.35rem; }
   .success-logo  { height: 11rem; }
 }
