@@ -1026,6 +1026,15 @@ body::after {
   letter-spacing: -0.025em;
   color: var(--ink);
 }
+
+.success-sub {
+  margin: 0;
+  font-size: clamp(1rem, 3.5vw, 1.125rem);
+  font-weight: 600;
+  font-style: italic;
+  color: var(--purple-mid);
+  letter-spacing: 0.01em;
+}
 .success-text {
   margin: 0;
   font-size: 1rem;
