@@ -1,5 +1,5 @@
 /**
- * Build favicons from logo-mark.png — black mark on transparent, tight square crop.
+ * Build favicons from logo-mark.png — white mark on transparent, tight square crop.
  */
 import sharp from "sharp";
 import { dirname, join } from "node:path";
@@ -8,7 +8,7 @@ import { fileURLToPath } from "node:url";
 const root = join(dirname(fileURLToPath(import.meta.url)), "..");
 const src = join(root, "assets", "logo-mark.png");
 
-async function getBlackMarkBuffer() {
+async function getWhiteMarkBuffer() {
   const { data, info } = await sharp(src)
     .ensureAlpha()
     .raw()
@@ -18,9 +18,9 @@ async function getBlackMarkBuffer() {
   for (let i = 0; i < pixels.length; i += 4) {
     const lum = (pixels[i] + pixels[i + 1] + pixels[i + 2]) / 3;
     if (lum > 48) {
-      pixels[i] = 0;
-      pixels[i + 1] = 0;
-      pixels[i + 2] = 0;
+      pixels[i] = 255;
+      pixels[i + 1] = 255;
+      pixels[i + 2] = 255;
       pixels[i + 3] = 255;
     } else {
       pixels[i + 3] = 0;
@@ -38,7 +38,7 @@ async function writeSquare(size, filename) {
   const pad = size <= 32 ? 1 : Math.max(2, Math.round(size * 0.02));
   const inner = size - pad * 2;
 
-  const markPng = await getBlackMarkBuffer();
+  const markPng = await getWhiteMarkBuffer();
   const trimmed = await sharp(markPng).trim().png().toBuffer();
 
   await sharp(trimmed)
