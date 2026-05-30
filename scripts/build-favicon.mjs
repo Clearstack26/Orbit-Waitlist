@@ -1,5 +1,5 @@
 /**
- * Build favicons from logo-mark-white-notext.png — white mark, transparent background.
+ * Build favicons — resize ONLY the user-provided logo. No pixel redraw, no generation.
  */
 import sharp from "sharp";
 import { dirname, join } from "node:path";
@@ -8,43 +8,16 @@ import { fileURLToPath } from "node:url";
 const root = join(dirname(fileURLToPath(import.meta.url)), "..");
 const src = join(root, "assets", "logo-mark-white-notext.png");
 
-async function getWhiteMarkTransparent() {
-  const { data, info } = await sharp(src)
-    .ensureAlpha()
-    .raw()
-    .toBuffer({ resolveWithObject: true });
-
-  const pixels = Buffer.from(data);
-  for (let i = 0; i < pixels.length; i += 4) {
-    const lum = (pixels[i] + pixels[i + 1] + pixels[i + 2]) / 3;
-    if (lum > 40) {
-      pixels[i] = 255;
-      pixels[i + 1] = 255;
-      pixels[i + 2] = 255;
-      pixels[i + 3] = 255;
-    } else {
-      pixels[i + 3] = 0;
-    }
-  }
-
-  return sharp(pixels, {
-    raw: { width: info.width, height: info.height, channels: 4 },
-  })
-    .png()
-    .toBuffer();
-}
-
 async function writeSquare(size, filename) {
-  const pad = size <= 32 ? 1 : Math.max(2, Math.round(size * 0.02));
+  const pad = Math.max(1, Math.round(size * 0.06));
   const inner = size - pad * 2;
 
-  const markPng = await getWhiteMarkTransparent();
-  const trimmed = await sharp(markPng).trim().png().toBuffer();
-
-  await sharp(trimmed)
+  await sharp(src)
+    .trim({ threshold: 1 })
     .resize(inner, inner, {
       fit: "contain",
       background: { r: 0, g: 0, b: 0, alpha: 0 },
+      kernel: sharp.kernel.lanczos3,
     })
     .extend({
       top: pad,
@@ -53,10 +26,10 @@ async function writeSquare(size, filename) {
       right: pad,
       background: { r: 0, g: 0, b: 0, alpha: 0 },
     })
-    .png({ compressionLevel: 9 })
+    .png({ compressionLevel: 9, adaptiveFiltering: true })
     .toFile(join(root, "assets", filename));
 
-  console.log(`Wrote assets/${filename} (${size}x${size})`);
+  console.log(`Wrote assets/${filename} (${size}x${size}) from logo-mark-white-notext.png`);
 }
 
 await writeSquare(16, "favicon-16.png");

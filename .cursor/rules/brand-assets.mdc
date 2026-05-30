@@ -1,0 +1,11 @@
+---
+description: Never generate or draw logos — only use user-provided brand assets
+alwaysApply: true
+---
+
+# Orbit brand assets
+
+- **NEVER** generate, draw, recreate, or approximate the Orbit logo with code, canvas, AI image tools, or manual pixel manipulation.
+- **ONLY** use logo files provided by the user in `assets/` (e.g. `logo-mark-white-notext.png`, `logo-white.png`, `logo-black.png`, `logo-mark.png`).
+- For favicons and icons: resize the provided PNG with sharp (or reference it directly). Do not rebuild the mark from scratch or threshold/redraw pixels.
+- If a new size is needed, scale from the existing asset. If transparency is wrong, ask the user for an updated export — do not invent a replacement.
