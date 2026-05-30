@@ -1258,13 +1258,15 @@ body.page-qr::after { display: none; }
     padding-bottom: 0;
   }
 
-  /* "Coming soon" stays pinned to the bottom */
+  /* "Coming soon" stays pinned to the bottom — centered on all devices */
   .intro-trust {
     margin-top: 0;
     position: absolute;
     bottom: max(2rem, env(safe-area-inset-bottom, 0px));
-    left: 50%;
-    transform: translateX(-50%);
+    left: 0;
+    right: 0;
+    width: 100%;
+    text-align: center;
   }
 
   .orbital-wrap--lg {
@@ -1291,6 +1293,8 @@ body.page-qr::after { display: none; }
     max-width: 68rem;
     text-align: left;
     align-items: start;
+    margin-top: auto;
+    margin-bottom: auto;
   }
   .problem-slide .slide-kicker      { grid-area: kicker; }
   .problem-slide .problem-statement { grid-area: stmt; align-self: start; text-align: left; }

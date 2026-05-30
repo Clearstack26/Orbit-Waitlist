@@ -2,6 +2,7 @@
  * Orbit — dot-grid background with shooting stars on demand.
  * Jittered dot lattice (no rigid grid lines), gentle pulse per dot.
  * orbitShoot() fires a shooting star across the canvas.
+ * Performance: no per-dot gradients; capped dot count; reduced DPR on large screens.
  */
 (function () {
   var canvas = document.getElementById("stars-canvas");
@@ -14,10 +15,11 @@
   var animId;
 
   /* ── Tuning ─── */
-  var SPACING     = 52;    // nominal grid spacing
+  var SPACING     = 56;    // nominal grid spacing
   var JITTER      = 14;    // max random offset per dot (breaks up grid lines)
   var DOT_R       = 1.1;   // base dot radius
   var PULSE_SPEED = 0.006; // phase increment per frame
+  var MAX_DOTS    = 600;   // cap to keep perf consistent on large screens
   var shoots      = [];    // active shooting stars
   /* ─────────────── */
 
@@ -36,7 +38,7 @@
     var offY = (H % SPACING) / 2;
     for (var r = 0; r < rows; r++) {
       for (var c = 0; c < cols; c++) {
-        /* Jitter each dot off the strict grid so no visible grid-line frames */
+        if (dots.length >= MAX_DOTS) break;
         var x = offX + c * SPACING + rand(-JITTER, JITTER);
         var y = offY + r * SPACING + rand(-JITTER, JITTER);
         var dx = (x - W / 2) / (W / 2);
@@ -51,11 +53,13 @@
           ampA:  0.05 + centreBoost * 0.05,
         });
       }
+      if (dots.length >= MAX_DOTS) break;
     }
   }
 
   function resize() {
-    dpr = Math.min(window.devicePixelRatio || 1, 2);
+    /* Cap DPR at 1.5 on large screens to halve pixel work */
+    dpr = Math.min(window.devicePixelRatio || 1, W > 1200 ? 1.5 : 2);
     W = window.innerWidth;
     H = window.innerHeight;
     canvas.width  = Math.round(W * dpr);
@@ -152,23 +156,12 @@
       var d = dots[i];
       d.phase += PULSE_SPEED;
       var a = d.baseA + d.ampA * Math.sin(d.phase);
-      a = Math.min(a, 0.90);
+      if (a > 0.90) a = 0.90;
 
       ctx.beginPath();
       ctx.arc(d.x, d.y, DOT_R, 0, Math.PI * 2);
       ctx.fillStyle = "rgba(190,175,255," + a.toFixed(3) + ")";
       ctx.fill();
-
-      /* Soft glow on brighter dots */
-      if (a > 0.16) {
-        var gr = ctx.createRadialGradient(d.x, d.y, 0, d.x, d.y, DOT_R * 4.5);
-        gr.addColorStop(0, "rgba(180,160,255," + (a * 0.18).toFixed(3) + ")");
-        gr.addColorStop(1, "rgba(180,160,255,0)");
-        ctx.beginPath();
-        ctx.arc(d.x, d.y, DOT_R * 4.5, 0, Math.PI * 2);
-        ctx.fillStyle = gr;
-        ctx.fill();
-      }
     }
 
     drawShoots();
