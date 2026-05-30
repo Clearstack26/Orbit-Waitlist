@@ -1,7 +1,11 @@
 {
   "buildCommand": "npm run vercel-build",
   "outputDirectory": ".",
+  "redirects": [
+    { "source": "/", "destination": "/join", "permanent": false }
+  ],
   "rewrites": [
+    { "source": "/qr", "destination": "/index.html" },
     { "source": "/join", "destination": "/join.html" },
     { "source": "/j", "destination": "/join.html" }
   ],
