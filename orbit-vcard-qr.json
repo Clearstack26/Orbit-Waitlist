@@ -1,6 +1,6 @@
 {
-  "payload": "BEGIN:VCARD\r\nVERSION:3.0\r\nUID:urn:orbit-waitlist\r\nFN:Orbit Waitlist\r\nORG:Orbit\r\nURL:https://orbit-waitlist-one.vercel.app/join\r\nNOTE:Join the Orbit waitlist for early access on iOS and Android. Open the link to sign up.\r\nEND:VCARD",
-  "joinUrl": "https://orbit-waitlist-one.vercel.app/join",
+  "payload": "BEGIN:VCARD\r\nVERSION:3.0\r\nUID:urn:orbit-waitlist\r\nFN:Orbit Waitlist\r\nORG:Orbit\r\nURL:https://orbitwaitlist.au/join\r\nNOTE:Join the Orbit waitlist for early access on iOS and Android. Open the link to sign up.\r\nEND:VCARD",
+  "joinUrl": "https://orbitwaitlist.au/join",
   "filename": "orbit-waitlist.vcf",
-  "byteLength": 230
+  "byteLength": 217
 }

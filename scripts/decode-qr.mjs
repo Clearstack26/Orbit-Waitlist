@@ -16,7 +16,7 @@ function decodePng(filePath) {
 const local = decodePng(path.join(root, "assets/join-qr.png"));
 console.log("Local PNG decodes to:", local);
 
-const res = await fetch("https://orbit-waitlist-one.vercel.app/assets/join-qr.png");
+const res = await fetch("https://orbitwaitlist.au/assets/join-qr.png");
 const buf = Buffer.from(await res.arrayBuffer());
 const png = PNG.sync.read(buf);
 const code = jsQR(new Uint8ClampedArray(png.data), png.width, png.height);
