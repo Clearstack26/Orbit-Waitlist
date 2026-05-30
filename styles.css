@@ -427,6 +427,16 @@ body::after {
   max-width: 22rem;
 }
 
+.slide-intro {
+  margin: 0;
+  font-size: clamp(0.9375rem, 3.2vw, 1.0625rem);
+  font-weight: 500;
+  color: var(--ink-soft);
+  line-height: 1.65;
+  max-width: 22rem;
+  text-align: center;
+}
+
 .slide-sub {
   margin: 0;
   font-size: clamp(0.9375rem, 3.5vw, 1rem);
@@ -586,6 +596,12 @@ body::after {
   padding-left: 0.75rem;
 }
 
+.problem-beat--4 {
+  color: var(--ink-soft);
+  border-left: 2px solid var(--purple-mid);
+  padding-left: 0.75rem;
+}
+
 /* ─── Problem slide entrance animations ─── */
 @media (prefers-reduced-motion: no-preference) {
 
@@ -595,6 +611,7 @@ body::after {
   .problem-slide .problem-beat--1   { opacity: 0; }
   .problem-slide .problem-beat--2   { opacity: 0; }
   .problem-slide .problem-beat--3   { opacity: 0; }
+  .problem-slide .problem-beat--4   { opacity: 0; }
   .problem-slide .slide-nav         { opacity: 0; }
 
   .problem-slide.is-active .slide-kicker {
@@ -617,8 +634,11 @@ body::after {
   .problem-slide.is-active .problem-beat--3 {
     animation: content-up 0.5s 1.38s ease-out both;
   }
+  .problem-slide.is-active .problem-beat--4 {
+    animation: content-up 0.5s 1.58s ease-out both;
+  }
   .problem-slide.is-active .slide-nav {
-    animation: content-up 0.4s 1.6s ease-out both;
+    animation: content-up 0.4s 1.8s ease-out both;
   }
 }
 
@@ -1311,6 +1331,7 @@ body.page-qr::after { display: none; }
 
   /* ── Solution slide: wider single column ── */
   .solution-slide .slide-content { max-width: 52rem; }
+  .slide-intro { max-width: 36rem; font-size: 1.0625rem; text-align: center; }
   .orbit-step                    { padding: 1.4rem 0; }
   .orbit-step__body strong       { font-size: 1.1rem; }
   .orbit-step__body span         { font-size: 1rem; }
