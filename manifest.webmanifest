@@ -9,8 +9,14 @@
   "orientation": "portrait",
   "icons": [
     {
-      "src": "/assets/logo-mark.png",
-      "sizes": "any",
+      "src": "/assets/favicon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/assets/apple-touch-icon.png",
+      "sizes": "180x180",
       "type": "image/png",
       "purpose": "any"
     }
