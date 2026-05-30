@@ -1,6 +1,5 @@
 /**
- * Build favicons from logo-mark-white-notext.png — white mark on brand-dark square.
- * Dark background keeps the white logo visible on light browser tabs.
+ * Build favicons from logo-mark-white-notext.png — white mark, transparent background.
  */
 import sharp from "sharp";
 import { dirname, join } from "node:path";
@@ -9,26 +8,51 @@ import { fileURLToPath } from "node:url";
 const root = join(dirname(fileURLToPath(import.meta.url)), "..");
 const src = join(root, "assets", "logo-mark-white-notext.png");
 
-/* Matches site --bg / theme-color */
-const BG = { r: 4, g: 4, b: 15, alpha: 1 };
+async function getWhiteMarkTransparent() {
+  const { data, info } = await sharp(src)
+    .ensureAlpha()
+    .raw()
+    .toBuffer({ resolveWithObject: true });
+
+  const pixels = Buffer.from(data);
+  for (let i = 0; i < pixels.length; i += 4) {
+    const lum = (pixels[i] + pixels[i + 1] + pixels[i + 2]) / 3;
+    if (lum > 40) {
+      pixels[i] = 255;
+      pixels[i + 1] = 255;
+      pixels[i + 2] = 255;
+      pixels[i + 3] = 255;
+    } else {
+      pixels[i + 3] = 0;
+    }
+  }
+
+  return sharp(pixels, {
+    raw: { width: info.width, height: info.height, channels: 4 },
+  })
+    .png()
+    .toBuffer();
+}
 
 async function writeSquare(size, filename) {
-  const pad = Math.max(2, Math.round(size * 0.08));
+  const pad = size <= 32 ? 1 : Math.max(2, Math.round(size * 0.02));
   const inner = size - pad * 2;
 
-  await sharp(src)
+  const markPng = await getWhiteMarkTransparent();
+  const trimmed = await sharp(markPng).trim().png().toBuffer();
+
+  await sharp(trimmed)
     .resize(inner, inner, {
       fit: "contain",
-      background: BG,
+      background: { r: 0, g: 0, b: 0, alpha: 0 },
     })
     .extend({
       top: pad,
       bottom: pad,
       left: pad,
       right: pad,
-      background: BG,
+      background: { r: 0, g: 0, b: 0, alpha: 0 },
     })
-    .flatten({ background: BG })
     .png({ compressionLevel: 9 })
     .toFile(join(root, "assets", filename));
 
