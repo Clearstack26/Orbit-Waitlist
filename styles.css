@@ -1184,3 +1184,152 @@ body.page-qr::after { display: none; }
 }
 
 .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0; }
+
+/* ════════════════════════════════════════════
+   RESPONSIVE — TABLET, IPAD & DESKTOP
+   Mobile layout is preserved. All changes are
+   additive via min-width breakpoints only.
+   ════════════════════════════════════════════ */
+
+/* ── Tablet / iPad portrait (≥ 680px) ── */
+@media (min-width: 680px) {
+
+  /* Global content width boost */
+  :root { --maxw: 32rem; }
+
+  /* Bigger orbital on splash */
+  .orbital-wrap--lg {
+    width: clamp(280px, 38vw, 360px);
+    height: clamp(280px, 38vw, 360px);
+  }
+
+  /* Intro: more breathing room */
+  .intro-inner { max-width: 28rem; gap: clamp(1.1rem, 2.5vh, 1.6rem); }
+  .intro-sub { font-size: clamp(1.1rem, 2.2vw, 1.2rem); max-width: 26rem; }
+
+  /* Slide steps: wider and more padding */
+  .slide-step {
+    padding-top: max(4rem, calc(env(safe-area-inset-top) + 3.5rem));
+    padding-left: max(2.5rem, env(safe-area-inset-left));
+    padding-right: max(2.5rem, env(safe-area-inset-right));
+  }
+
+  /* Wider slide content box */
+  .slide-content { max-width: 30rem; }
+
+  /* Scale typography up gently */
+  .slide-heading { font-size: clamp(1.75rem, 3.5vw, 2.1rem); }
+  .problem-line  { font-size: clamp(1.8rem, 4vw, 2.35rem); }
+  .problem-beats { max-width: 28rem; }
+  .problem-beat  { font-size: 0.9375rem; }
+
+  /* Solution steps: slightly more generous */
+  .orbit-step__num          { font-size: 1.85rem; }
+  .orbit-step__body strong  { font-size: 1.05rem; }
+  .orbit-step__body span    { font-size: 0.9375rem; }
+
+  /* Form */
+  .form-heading { font-size: clamp(1.9rem, 3.5vw, 2.4rem); }
+
+  /* Success */
+  .success-stack { max-width: 28rem; gap: 1.4rem; }
+  .success-title { font-size: clamp(1.8rem, 3.5vw, 2.4rem); }
+  .success-logo  { height: clamp(6rem, 15vw, 9rem); }
+}
+
+/* ── Desktop / iPad landscape (≥ 1024px) ── */
+@media (min-width: 1024px) {
+
+  :root { --maxw: 38rem; }
+
+  /* ── Splash: vertically centred, large orbital ── */
+  .intro-step {
+    justify-content: center;
+    padding-top: 0;
+    padding-bottom: 0;
+  }
+
+  /* "Coming soon" stays pinned to the bottom */
+  .intro-trust {
+    margin-top: 0;
+    position: absolute;
+    bottom: max(2rem, env(safe-area-inset-bottom, 0px));
+    left: 50%;
+    transform: translateX(-50%);
+  }
+
+  .orbital-wrap--lg {
+    width: clamp(360px, 28vw, 440px);
+    height: clamp(360px, 28vw, 440px);
+  }
+
+  .intro-inner { max-width: 34rem; }
+  .intro-sub   { font-size: 1.25rem; max-width: 30rem; }
+
+  /* CTA button: slightly larger */
+  .btn-enter { padding: 1.05rem 2.5rem; font-size: 1rem; }
+
+  /* ── Problem slide: two-column grid ── */
+  .problem-slide .slide-content {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-areas:
+      "kicker  kicker"
+      "stmt    beats"
+      "nav     nav";
+    column-gap: 4rem;
+    row-gap: 1.5rem;
+    max-width: 68rem;
+    text-align: left;
+    align-items: start;
+  }
+  .problem-slide .slide-kicker      { grid-area: kicker; }
+  .problem-slide .problem-statement { grid-area: stmt; align-self: start; text-align: left; }
+  .problem-slide .problem-beats     { grid-area: beats; max-width: none; }
+  .problem-slide .slide-nav         { grid-area: nav; margin-top: 0; }
+
+  .problem-line  { font-size: clamp(2rem, 3vw, 2.6rem); }
+  .problem-beat  { font-size: 1rem; }
+
+  /* ── Solution slide: wider single column ── */
+  .solution-slide .slide-content { max-width: 52rem; }
+  .orbit-step                    { padding: 1.4rem 0; }
+  .orbit-step__body strong       { font-size: 1.1rem; }
+  .orbit-step__body span         { font-size: 1rem; }
+  .orbit-step__num               { font-size: 2rem; min-width: 3rem; }
+
+  /* ── Form: centred, wider ── */
+  .form-page   { padding: 3rem 0; }
+  .form-heading { font-size: clamp(2rem, 2.8vw, 2.8rem); }
+  .form-card   { padding: 2rem 2.25rem; }
+
+  /* ── Success ── */
+  .success-stack { max-width: 34rem; gap: 1.75rem; }
+  .success-title { font-size: clamp(2.2rem, 3vw, 3rem); }
+  .success-text  { font-size: 1.125rem; max-width: 28rem; }
+  .success-logo  { height: clamp(7rem, 12vw, 10rem); }
+
+  /* Back button: nudge inward on desktop */
+  .btn-back {
+    top: max(1.5rem, env(safe-area-inset-top, 0px));
+    left: max(1.5rem, env(safe-area-inset-left, 0px));
+  }
+}
+
+/* ── Large desktop (≥ 1280px) ── */
+@media (min-width: 1280px) {
+
+  :root { --maxw: 42rem; }
+
+  .orbital-wrap--lg { width: 460px; height: 460px; }
+
+  .problem-slide .slide-content { max-width: 80rem; column-gap: 6rem; }
+  .problem-line  { font-size: 2.8rem; }
+
+  .solution-slide .slide-content { max-width: 60rem; }
+
+  .slide-heading { font-size: 2.3rem; }
+
+  .success-title { font-size: 3.2rem; }
+  .success-logo  { height: 11rem; }
+}
