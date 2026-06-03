@@ -53,7 +53,8 @@ html {
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
-  .orbital-ring { animation: none !important; }
+  .orbital-ring,
+  .dot-orbit { animation: none !important; }
 }
 
 body {
@@ -228,7 +229,7 @@ body {
   transform: translate(-50%, -50%);
 }
 
-/* Ring strokes: OrbitRingsAnimation light + OrbitStoryBeat.brand */
+/* Ring strokes + speeds: OrbitRingsAnimation (10s cycle, 8°/5°/3° per second on rings) */
 .ring-outer {
   width: 100%;
   height: 100%;
@@ -251,6 +252,33 @@ body {
   border: 2.25px solid rgba(91, 81, 200, 0.58);
   box-shadow: none;
   animation: ring-spin 120s linear infinite;
+}
+
+/* Dot orbit speeds: t*speed rad per 10s (Flutter _orbitDot) */
+.dot-orbit {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+}
+
+.dot-orbit--outer {
+  width: 100%;
+  height: 100%;
+  animation: ring-spin 10.47s linear infinite;
+}
+
+.dot-orbit--mid {
+  width: 73.6%;
+  height: 73.6%;
+  animation: ring-spin 6.98s linear infinite reverse;
+}
+
+.dot-orbit--inner {
+  width: 47.2%;
+  height: 47.2%;
+  animation: ring-spin 5.24s linear infinite;
 }
 
 .orbital-dot {
@@ -1007,16 +1035,18 @@ body {
 }
 
 .form-page {
-  max-width: 30rem;
+  max-width: 32rem;
   width: 100%;
   margin: auto;
+  padding-top: clamp(0.5rem, 2vh, 1.5rem);
 }
 
 .orbit-logo {
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-bottom: clamp(1.25rem, 3.5vh, 1.75rem);
+  margin-bottom: clamp(1.5rem, 4vh, 2rem);
+  width: 100%;
 }
 
 .orbit-logo__img {
@@ -1027,8 +1057,8 @@ body {
 }
 
 .orbit-logo__img--full {
-  height: clamp(2.25rem, 11vw, 3.25rem);
-  max-width: min(12rem, 72vw);
+  height: clamp(4.5rem, 22vw, 7rem);
+  max-width: min(20rem, 92vw);
 }
 
 .form-heading {
@@ -1084,7 +1114,8 @@ body {
     0 0 0 1px rgba(124, 111, 247, 0.12),
     var(--shadow-card);
   border-radius: var(--orbit-card-radius);
-  padding: 1.5rem;
+  padding: clamp(1.5rem, 4.5vw, 2rem);
+  width: 100%;
 }
 
 .form-group {
