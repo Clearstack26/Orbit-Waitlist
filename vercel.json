@@ -23,6 +23,12 @@
       ]
     },
     {
+      "source": "/styles.css",
+      "headers": [
+        { "key": "Cache-Control", "value": "no-store, must-revalidate" }
+      ]
+    },
+    {
       "source": "/join.html",
       "headers": [
         { "key": "Cache-Control", "value": "no-store, must-revalidate" }
