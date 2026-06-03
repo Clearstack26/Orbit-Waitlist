@@ -128,24 +128,36 @@
           return path;
         }
 
-        function resolveJoinUrl(cfg) {
+        function resolveJoinUrl(manifest, cfg) {
+          var fromManifest = String((manifest && manifest.url) || "").trim();
+          if (fromManifest && fromManifest.indexOf("vercel.app") === -1) {
+            return fromManifest;
+          }
+
           var joinPath = normalizePath(cfg && cfg.joinPath);
-          var raw = String((cfg && cfg.baseUrl) || "").trim();
+          var raw = String((cfg && cfg.baseUrl) || "").trim().replace(/\/$/, "");
           var placeholder = "your-orbit-waitlist.vercel.app";
-          var baseOrigin;
-          if (raw && raw.indexOf(placeholder) === -1) {
-            baseOrigin = raw.replace(/\/$/, "");
+          var baseOrigin = JOIN_URL.replace(/\/join$/, "");
+
+          if (
+            raw &&
+            raw.indexOf(placeholder) === -1 &&
+            raw.indexOf("vercel.app") === -1
+          ) {
+            baseOrigin = raw;
           } else if (
             window.location.hostname === "localhost" ||
             window.location.hostname === "127.0.0.1"
           ) {
-            baseOrigin = JOIN_URL.replace(/\/join$/, "");
-          } else {
             baseOrigin = window.location.origin;
           }
+
           var url = baseOrigin + joinPath;
           if (!/^https:\/\//i.test(url)) {
             url = "https://" + url.replace(/^\/\//, "");
+          }
+          if (url.indexOf("vercel.app") !== -1) {
+            return JOIN_URL;
           }
           return url;
         }
@@ -217,9 +229,14 @@
         }
 
         function run() {
-          loadJson("/site-config.json")
-            .then(function (cfg) {
-              var joinUrl = resolveJoinUrl(cfg);
+          Promise.all([
+            loadJson("/join-url.json"),
+            loadJson("/site-config.json").catch(function () {
+              return {};
+            }),
+          ])
+            .then(function (results) {
+              var joinUrl = resolveJoinUrl(results[0], results[1]);
               errEl.hidden = true;
               return drawCanvas(joinUrl, "Opens in browser: " + joinUrl);
             })

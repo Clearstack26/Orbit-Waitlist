@@ -141,12 +141,13 @@ try {
 }
 
 try {
-  const res = await fetch(`${cfg.baseUrl.replace(/\/$/, "")}/`);
+  const qrPage = `${cfg.baseUrl.replace(/\/$/, "")}/qr`;
+  const res = await fetch(qrPage, { redirect: "follow" });
   const html = await res.text();
-  if (html.includes('id="qr-url"') && html.includes("qrcode.min.js")) {
-    pass("QR page uses canvas", cfg.baseUrl);
+  if (res.ok && html.includes('id="qr-url"') && html.includes("qrcode.min.js")) {
+    pass("QR page uses canvas", qrPage);
   } else {
-    fail("QR page uses canvas", "expected qr-url canvas");
+    fail("QR page uses canvas", `status ${res.status}, expected qr-url canvas at ${qrPage}`);
   }
 } catch (e) {
   fail("QR page uses canvas", e.message);

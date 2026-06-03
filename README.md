@@ -6,8 +6,8 @@ Static web app for the Orbit pre-launch waitlist. Collects name + email via a cl
 
 | Route | File | Purpose |
 |-------|------|---------|
-| `/` | `index.html` | QR code — show at events for people to scan |
-| `/join` | `join.html` | Waitlist signup form |
+| `/qr` | `index.html` | QR code — show at events for people to scan |
+| `/join` | `join.html` | Waitlist signup form (root `/` redirects here) |
 
 ## Stack
 
@@ -27,16 +27,16 @@ npm run build
 
 ### 2. Update `site-config.json`
 
-After deploying, update `baseUrl` with your live Vercel URL:
+Set `baseUrl` to your custom domain (never a `.vercel.app` URL):
 
 ```json
 {
-  "baseUrl": "https://orbit-waitlist.vercel.app",
+  "baseUrl": "https://orbitwaitlist.au",
   "joinPath": "/join"
 }
 ```
 
-This is what the QR code on `index.html` points to.
+Then run `npm run build` so `join-url.json` and `assets/join-qr.png` encode the same URL. The QR page at **`/qr`** always points to that domain — opening it on a Vercel preview URL will not change what gets encoded.
 
 ### 3. Deploy to Vercel
 
@@ -70,7 +70,7 @@ You can export a CSV of all emails from there when you're ready to send the laun
 
 ## Apple Wallet / Home Screen
 
-- **iOS:** Open `/` in Safari → Share → "Add to Home Screen"
+- **iOS:** Open `/qr` in Safari → Share → "Add to Home Screen"
 - **Third-party wallet apps:** Paste your deployed URL into the app to generate a pass with the QR embedded
 
 ## Development

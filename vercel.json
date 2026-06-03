@@ -11,6 +11,12 @@
   ],
   "headers": [
     {
+      "source": "/join-url.json",
+      "headers": [
+        { "key": "Cache-Control", "value": "no-store" }
+      ]
+    },
+    {
       "source": "/site-config.json",
       "headers": [
         { "key": "Cache-Control", "value": "no-store" }

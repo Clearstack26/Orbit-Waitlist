@@ -15,10 +15,17 @@ function normalizePath(p) {
   return path;
 }
 
+const CANONICAL_ORIGIN = "https://orbitwaitlist.au";
+
 function resolveJoinUrl() {
   const raw = String(cfg.baseUrl || "").trim().replace(/\/$/, "");
+  const placeholder = "your-orbit-waitlist.vercel.app";
+  const base =
+    raw && !raw.includes(placeholder) && !/\.vercel\.app$/i.test(raw)
+      ? raw
+      : CANONICAL_ORIGIN;
   const joinPath = normalizePath(cfg.joinPath);
-  let url = `${raw}${joinPath}`;
+  let url = `${base}${joinPath}`;
   if (!/^https:\/\//i.test(url)) {
     url = `https://${url.replace(/^\/\//, "")}`;
   }

@@ -22,7 +22,9 @@ function resolveJoinUrl(cfg) {
   const raw = String(cfg.baseUrl || "").trim().replace(/\/$/, "");
   const placeholder = "your-orbit-waitlist.vercel.app";
   const base =
-    raw && !raw.includes(placeholder) ? raw : "https://orbitwaitlist.au";
+    raw && !raw.includes(placeholder) && !/\.vercel\.app$/i.test(raw)
+      ? raw
+      : "https://orbitwaitlist.au";
   let path = String(cfg.joinPath || "/join").trim() || "/join";
   if (!path.startsWith("/")) path = "/" + path;
   return `${base}${path}`;
