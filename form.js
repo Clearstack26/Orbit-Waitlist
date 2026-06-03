@@ -76,9 +76,6 @@
       if (s.id !== "step-" + currentStep) s.classList.remove("is-active");
     });
 
-    // Shooting star on every slide change
-    if (typeof window.orbitShoot === "function") window.orbitShoot();
-
     var dir  = direction || "fwd";
     var cur  = el(currentStep);
     var dest = el(next);

@@ -3,30 +3,38 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover" />
-    <meta name="color-scheme" content="dark" />
-    <meta name="theme-color" content="#04040f" />
+    <meta name="color-scheme" content="light" />
+    <meta name="theme-color" content="#F2F2F7" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
     <meta name="mobile-web-app-capable" content="yes" />
     <link rel="canonical" href="https://orbitwaitlist.au/join" />
     <title>Join the Orbit Waitlist</title>
-    <meta name="description" content="Be the first to know when Orbit launches on iOS and Android." />
+    <meta name="description" content="Turn every conversation into momentum. Join early access for business owners who network at events." />
     <meta property="og:title" content="Join the Orbit Waitlist" />
-    <meta property="og:description" content="Your personal networking assistant. Real relationships. Real follow-through. Real results. Join the early access list." />
+    <meta property="og:description" content="Turn every conversation into momentum. Real relationships. Real follow-through. Join the early access list." />
     <meta property="og:type" content="website" />
     <meta property="og:url" content="https://orbitwaitlist.au/join" />
-    <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32.png?v=4" />
-    <link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon-16.png?v=4" />
-    <link rel="icon" type="image/png" sizes="48x48" href="/assets/favicon-48.png?v=4" />
-    <link rel="apple-touch-icon" sizes="180x180" href="/assets/apple-touch-icon.png?v=4" />
+    <meta property="og:image" content="https://orbitwaitlist.au/assets/og-image.png?v=5" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:image" content="https://orbitwaitlist.au/assets/og-image.png?v=5" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon-32.png?v=5" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon-16.png?v=5" />
+    <link rel="icon" type="image/png" sizes="48x48" href="/assets/favicon-48.png?v=5" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/assets/apple-touch-icon.png?v=5" />
     <link rel="manifest" href="/manifest.webmanifest" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600;9..144,700;9..144,800&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="/styles.css" />
   </head>
   <body>
-    <canvas id="stars-canvas" aria-hidden="true"></canvas>
+    <div class="ambient-bg" aria-hidden="true">
+      <span class="ambient-blob ambient-blob--primary"></span>
+      <span class="ambient-blob ambient-blob--accent"></span>
+      <span class="ambient-blob ambient-blob--deep"></span>
+      <span class="ambient-blob ambient-blob--cyan"></span>
+    </div>
 
     <button class="btn-back" id="btn-back" aria-label="Go back">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5"/><path d="m12 19-7-7 7-7"/></svg>
@@ -34,11 +42,11 @@
 
     <div class="step-shell" id="step-shell">
 
-      <!-- ═══════════════════════════════
-           STEP 0: INTRO — orbital splash
-      ═══════════════════════════════ -->
+      <!-- STEP 0: INTRO -->
       <div class="step intro-step is-active" id="step-0" role="main">
         <div class="intro-inner">
+
+          <h1 class="intro-wordmark">ORBIT</h1>
 
           <div class="orbital-wrap orbital-wrap--lg" aria-hidden="true">
             <div class="orbital-ring ring-outer">
@@ -51,10 +59,12 @@
               <div class="orbital-dot dot-inner"></div>
             </div>
             <div class="orbital-center orbital-center--logo">
-              <img src="/assets/logo-white.png" alt="Orbit" />
+              <img src="/assets/logo-black.png" alt="" />
             </div>
           </div>
-          <p class="intro-sub">Your personal networking assistant. Real relationships. Real follow-through. Real results.</p>
+
+          <p class="intro-headline">Turn every conversation into momentum.</p>
+          <p class="intro-sub">Real relationships. Real follow-through. Built for owners who network at events.</p>
 
           <button class="btn-enter" id="btn-enter" aria-label="See how Orbit works">
             See how it works
@@ -63,13 +73,13 @@
 
         </div>
 
-        <p class="intro-trust">Coming soon · iOS &amp; Android</p>
+        <div class="intro-trust-bar">
+          <p class="intro-trust">Coming soon · iOS &amp; Android</p>
+        </div>
 
       </div>
 
-      <!-- ═══════════════════════════════
-           STEP 1: THE PROBLEM — cinematic
-      ═══════════════════════════════ -->
+      <!-- STEP 1: THE PROBLEM -->
       <div class="step slide-step problem-slide" id="step-1" aria-label="The problem Orbit solves">
         <div class="slide-content">
 
@@ -86,30 +96,31 @@
             <div class="problem-beats">
             <div class="problem-beat problem-beat--1">
               <span class="problem-beat__label">01 · Cards</span>
-              <p class="problem-beat__text">You tell yourself you'll remember. You open your notes and never write it down. By the time you want to reach out, the card has fallen through a crack, gone through the wash, or simply disappeared.</p>
+              <p class="problem-beat__text">You mean to follow up. The card is in your pocket, then it is gone before you write anything down.</p>
             </div>
 
             <div class="problem-beat problem-beat--2">
               <span class="problem-beat__label">02 · Memory</span>
-              <p class="problem-beat__text">You think about messaging them. But you can't remember their company, their role, or what you actually talked about. You had a great conversation. Now you're drawing a blank.</p>
+              <p class="problem-beat__text">Monday arrives and you cannot recall their role, company, or what you actually discussed.</p>
             </div>
 
             <div class="problem-beat problem-beat--3">
               <span class="problem-beat__label">03 · Scattered</span>
-              <p class="problem-beat__text">So you try to be organised. You type a name into your notes app. Send yourself a message. Maybe you photographed the card. Now their details are scattered across four different apps, none of which know who this person is, why they matter, or what comes next.</p>
+              <p class="problem-beat__text">Names end up across notes, photos, and messages. Nothing ties them to the event or the next step.</p>
             </div>
 
             <div class="problem-beat problem-beat--4">
               <span class="problem-beat__label">04 · Follow-Through</span>
-              <p class="problem-beat__text">You are running a business. Life does not pause. By Monday morning you are flat out, and those ten people you met on Friday are just names you cannot quite place anymore. The follow-up never happens. Not because you did not want to. Because there was nothing keeping you accountable.</p>
+              <p class="problem-beat__text">You are running a business. Without a system, Friday's contacts never get a Monday follow-up.</p>
             </div>
 
             <div class="problem-beat problem-beat--5">
               <span class="problem-beat__label">05 · Your Time</span>
-              <p class="problem-beat__text">You went to that event to grow your business. You paid for the ticket, the travel, the time away from everything else. You had exactly the right conversations. But without the follow-up, none of it converts. Every hour you invested is wasted. Not because the night was not good. Because nothing came from it.</p>
+              <p class="problem-beat__text">You invested in the event. Without follow-through, those conversations never turn into growth.</p>
             </div>
-            </div><!-- /problem-beats -->
-          </div><!-- /problem-beats-col -->
+            </div>
+
+          </div>
 
           <div class="slide-nav">
             <div class="progress-dots" aria-label="Slide 1 of 2"></div>
@@ -119,12 +130,10 @@
             </button>
           </div>
 
-        </div><!-- /slide-content -->
-      </div><!-- /step-1 -->
+        </div>
+      </div>
 
-      <!-- ═══════════════════════════════
-           STEP 2: THE SOLUTION — scrollable
-      ═══════════════════════════════ -->
+      <!-- STEP 2: THE SOLUTION -->
       <div class="step slide-step solution-slide" id="step-2" aria-label="How Orbit solves it">
         <div class="slide-content">
 
@@ -147,7 +156,7 @@
               <span class="orbit-step__num">02</span>
               <div class="orbit-step__body">
                 <strong>Record a quick voice note</strong>
-                <span>At the event, in the car, or when you get home. Hit record for thirty seconds. Say their name, role, and what you talked about. No card needed. Orbit builds their profile from your voice alone. Already scanned their card? Open that contact and record straight onto their profile. Nothing is forgotten.</span>
+                <span>At the event or when you get home, record for thirty seconds. Say their name, role, and what you talked about. Orbit builds their profile from your voice. Already scanned their card? Add the note straight onto their profile.</span>
               </div>
             </div>
 
@@ -190,14 +199,12 @@
         </div>
       </div>
 
-      <!-- ═══════════════════════════════
-           STEP 3: FORM
-      ═══════════════════════════════ -->
+      <!-- STEP 3: FORM -->
       <div class="step form-step" id="step-3" aria-label="Waitlist signup form">
         <div class="form-page">
 
           <div class="orbit-logo">
-            <img src="/assets/logo-white.png" alt="Orbit" class="orbit-logo__img" />
+            <img src="/assets/logo-black.png" alt="Orbit" class="orbit-logo__img" />
           </div>
 
           <h1 class="form-heading">Secure your spot.</h1>
@@ -231,9 +238,11 @@
                 </div>
 
                 <button type="submit" class="btn-submit" id="btn-submit">
-                  <span class="btn-submit__text">Secure my spot</span>
+                  <span class="btn-submit__text">Join the waitlist</span>
                   <span class="btn-submit__spinner" aria-hidden="true"></span>
                 </button>
+
+                <p class="form-trust">Early access for business owners at events.</p>
 
               </form>
             </div>
@@ -243,23 +252,23 @@
         </div>
       </div>
 
-      <!-- ═══════════════════════════════
-           STEP 4: SUCCESS
-      ═══════════════════════════════ -->
+      <!-- STEP 4: SUCCESS -->
       <div class="step success-step" id="step-4" role="status" aria-live="polite" aria-label="Successfully joined waitlist">
         <div class="success-stack">
-          <img src="/assets/logo-white.png" alt="" class="success-logo" aria-hidden="true" />
+          <div class="success-check" aria-hidden="true">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" fill="none" width="72" height="72">
+              <circle cx="24" cy="24" r="22" stroke="currentColor" stroke-width="2.5" opacity="0.25"/>
+              <path d="M14 24.5 20.5 31 34 17" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
           <h2 class="success-title">Welcome, <span id="success-name"></span></h2>
-          <p class="success-sub">You are in Orbit.</p>
-          <p class="success-text">You have joined the early access list alongside a growing group of professionals ready to connect smarter and follow through. We will be in touch personally when Orbit is ready.</p>
+          <p class="success-sub">You are on the list.</p>
+          <p class="success-text">We will be in touch personally when Orbit is ready for early access. Nothing else you need to do right now.</p>
         </div>
       </div>
 
     </div>
 
-    <!-- page-footer removed -->
-
-    <script src="/stars.js"></script>
     <script src="/form.js"></script>
   </body>
 </html>
