@@ -1044,8 +1044,8 @@ body {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  align-items: stretch;
-  gap: clamp(0.15rem, 0.65dvh, 0.4rem);
+  align-items: center;
+  gap: clamp(0.2rem, 0.75dvh, 0.5rem);
   min-height: 0;
   overflow: hidden;
 }
@@ -1059,63 +1059,69 @@ body {
 }
 
 .form-step .orbit-logo {
-  margin: 0;
+  width: 100%;
+  margin: 0 0 clamp(0.2rem, 0.6dvh, 0.4rem);
   flex-shrink: 0;
 }
 
 .form-step .orbit-logo__img--full {
-  height: clamp(3.25rem, 11dvh, 5.75rem);
-  max-width: min(22rem, 88vw);
+  height: clamp(5.25rem, 24vw, 8.75rem);
+  max-width: min(26rem, 94vw);
 }
 
 .form-step .form-heading {
+  width: 100%;
   margin: 0;
-  font-size: clamp(1.45rem, 4.8dvh, 1.9rem);
+  text-align: center;
+  font-size: clamp(1.6rem, 5.5vw, 2rem);
   flex-shrink: 0;
 }
 
 .form-step .form-subheading {
-  margin: 0 0 clamp(0.3rem, 0.9dvh, 0.55rem);
-  font-size: clamp(0.8125rem, 2.15dvh, 0.9375rem);
-  line-height: 1.4;
-  max-width: 19rem;
+  width: 100%;
+  max-width: 20rem;
+  margin: 0 auto clamp(0.45rem, 1.1dvh, 0.75rem);
+  padding: 0 0.25rem;
+  text-align: center;
+  font-size: clamp(0.875rem, 2.4vw, 0.9375rem);
+  line-height: 1.5;
   flex-shrink: 0;
 }
 
 .form-step .form-card {
-  padding: clamp(0.95rem, 2.4dvh, 1.35rem);
+  width: 100%;
+  padding: clamp(1.1rem, 2.8dvh, 1.5rem);
   flex-shrink: 1;
   min-height: 0;
 }
 
 .form-step .form-group {
-  margin-bottom: clamp(0.5rem, 1.35dvh, 0.7rem);
+  margin-bottom: clamp(0.55rem, 1.4dvh, 0.75rem);
 }
 
 .form-step .form-group--last {
-  margin-bottom: clamp(0.6rem, 1.5dvh, 0.85rem);
+  margin-bottom: clamp(0.65rem, 1.6dvh, 0.9rem);
 }
 
 .form-step .form-label {
-  font-size: clamp(0.8125rem, 2.1dvh, 0.875rem);
+  font-size: 0.875rem;
 }
 
 .form-step .form-input {
-  min-height: clamp(42px, 5.8dvh, 48px);
-  padding: 0.62rem 0.85rem;
-  font-size: clamp(0.9375rem, 2.4dvh, 1rem);
+  min-height: 48px;
+  padding: 0.7rem 0.9rem;
+  font-size: 1rem;
 }
 
 .form-step .btn-submit {
-  min-height: clamp(44px, 6.2dvh, 48px);
-  padding: 0.72rem 1.25rem;
-  font-size: clamp(0.875rem, 2.3dvh, 0.9375rem);
+  min-height: 48px;
 }
 
 .form-step .form-trust {
-  margin: clamp(0.4rem, 1.1dvh, 0.6rem) 0 0;
-  font-size: clamp(0.75rem, 1.95dvh, 0.8125rem);
-  line-height: 1.35;
+  margin: 0.75rem 0 0;
+  text-align: center;
+  font-size: 0.8125rem;
+  line-height: 1.4;
 }
 
 .orbit-logo__img {
@@ -1131,14 +1137,26 @@ body {
 }
 
 .form-step .form-footnote {
-  margin: clamp(0.3rem, 0.85dvh, 0.5rem) 0 0;
-  font-size: clamp(0.75rem, 1.95dvh, 0.8125rem);
+  width: 100%;
+  margin: clamp(0.45rem, 1dvh, 0.65rem) 0 0;
+  text-align: center;
+  font-size: 0.8125rem;
   flex-shrink: 0;
 }
 
-@media (max-height: 700px) {
+@media (max-height: 640px) {
   .form-step .form-trust {
     display: none;
+  }
+
+  .form-step .orbit-logo__img--full {
+    height: clamp(4.5rem, 18vw, 6.5rem);
+  }
+
+  .form-step .form-subheading {
+    font-size: 0.8125rem;
+    line-height: 1.4;
+    margin-bottom: 0.35rem;
   }
 }
 
@@ -1534,11 +1552,11 @@ body.page-qr {
   /* Form */
   .form-heading { font-size: clamp(1.9rem, 3.5vw, 2.4rem); }
   .form-step .form-heading {
-    font-size: clamp(1.55rem, 4.2dvh, 2rem);
+    font-size: clamp(1.75rem, 4vw, 2.1rem);
   }
   .form-step .orbit-logo__img--full {
-    height: clamp(3.75rem, 10dvh, 6rem);
-    max-width: min(24rem, 90vw);
+    height: clamp(5.5rem, 20vw, 8.5rem);
+    max-width: min(26rem, 92vw);
   }
 
   /* Success */
@@ -1618,16 +1636,20 @@ body.page-qr {
   }
 
   .form-step .orbit-logo__img--full {
-    height: clamp(4rem, 9dvh, 6.5rem);
-    max-width: min(26rem, 88vw);
+    height: clamp(5.75rem, 14vw, 9rem);
+    max-width: min(28rem, 90vw);
   }
   .form-step .form-heading {
-    font-size: clamp(1.65rem, 3.8dvh, 2.2rem);
+    font-size: clamp(1.85rem, 2.8vw, 2.35rem);
   }
   .form-heading { font-size: clamp(2rem, 2.8vw, 2.8rem); }
   .form-card   { padding: 2rem 2.25rem; }
   .form-step .form-card {
-    padding: clamp(1.1rem, 2.2dvh, 1.5rem);
+    padding: clamp(1.25rem, 2.5dvh, 1.65rem);
+  }
+  .form-step .form-subheading {
+    max-width: 22rem;
+    font-size: 0.9375rem;
   }
 
   /* ── Success ── */
