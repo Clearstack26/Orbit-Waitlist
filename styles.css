@@ -999,10 +999,13 @@ body {
 
 .form-step {
   align-items: center;
-  justify-content: flex-start;
-  padding: max(2.5rem, calc(env(safe-area-inset-top) + 2rem))
+  justify-content: center;
+  overflow: hidden;
+  overscroll-behavior: none;
+  touch-action: manipulation;
+  padding: max(0.65rem, env(safe-area-inset-top))
            max(1rem, env(safe-area-inset-right))
-           max(3rem, calc(env(safe-area-inset-bottom) + 2rem))
+           max(0.65rem, env(safe-area-inset-bottom))
            max(1rem, env(safe-area-inset-left));
 }
 
@@ -1034,8 +1037,17 @@ body {
 .form-page {
   max-width: 32rem;
   width: 100%;
-  margin: clamp(6.5rem, 34vh, 10.5rem) auto 0;
-  padding-top: 0;
+  height: 100%;
+  max-height: 100%;
+  margin: 0 auto;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: stretch;
+  gap: clamp(0.15rem, 0.65dvh, 0.4rem);
+  min-height: 0;
+  overflow: hidden;
 }
 
 .orbit-logo {
@@ -1047,8 +1059,63 @@ body {
 }
 
 .form-step .orbit-logo {
-  margin-top: 0;
-  margin-bottom: clamp(0.25rem, 0.65vh, 0.45rem);
+  margin: 0;
+  flex-shrink: 0;
+}
+
+.form-step .orbit-logo__img--full {
+  height: clamp(3.25rem, 11dvh, 5.75rem);
+  max-width: min(22rem, 88vw);
+}
+
+.form-step .form-heading {
+  margin: 0;
+  font-size: clamp(1.45rem, 4.8dvh, 1.9rem);
+  flex-shrink: 0;
+}
+
+.form-step .form-subheading {
+  margin: 0 0 clamp(0.3rem, 0.9dvh, 0.55rem);
+  font-size: clamp(0.8125rem, 2.15dvh, 0.9375rem);
+  line-height: 1.4;
+  max-width: 19rem;
+  flex-shrink: 0;
+}
+
+.form-step .form-card {
+  padding: clamp(0.95rem, 2.4dvh, 1.35rem);
+  flex-shrink: 1;
+  min-height: 0;
+}
+
+.form-step .form-group {
+  margin-bottom: clamp(0.5rem, 1.35dvh, 0.7rem);
+}
+
+.form-step .form-group--last {
+  margin-bottom: clamp(0.6rem, 1.5dvh, 0.85rem);
+}
+
+.form-step .form-label {
+  font-size: clamp(0.8125rem, 2.1dvh, 0.875rem);
+}
+
+.form-step .form-input {
+  min-height: clamp(42px, 5.8dvh, 48px);
+  padding: 0.62rem 0.85rem;
+  font-size: clamp(0.9375rem, 2.4dvh, 1rem);
+}
+
+.form-step .btn-submit {
+  min-height: clamp(44px, 6.2dvh, 48px);
+  padding: 0.72rem 1.25rem;
+  font-size: clamp(0.875rem, 2.3dvh, 0.9375rem);
+}
+
+.form-step .form-trust {
+  margin: clamp(0.4rem, 1.1dvh, 0.6rem) 0 0;
+  font-size: clamp(0.75rem, 1.95dvh, 0.8125rem);
+  line-height: 1.35;
 }
 
 .orbit-logo__img {
@@ -1063,9 +1130,16 @@ body {
   max-width: min(20rem, 92vw);
 }
 
-.form-step .orbit-logo__img--full {
-  height: clamp(5.75rem, 28vw, 9rem);
-  max-width: min(26rem, 94vw);
+.form-step .form-footnote {
+  margin: clamp(0.3rem, 0.85dvh, 0.5rem) 0 0;
+  font-size: clamp(0.75rem, 1.95dvh, 0.8125rem);
+  flex-shrink: 0;
+}
+
+@media (max-height: 700px) {
+  .form-step .form-trust {
+    display: none;
+  }
 }
 
 .form-heading {
@@ -1459,9 +1533,12 @@ body.page-qr {
 
   /* Form */
   .form-heading { font-size: clamp(1.9rem, 3.5vw, 2.4rem); }
+  .form-step .form-heading {
+    font-size: clamp(1.55rem, 4.2dvh, 2rem);
+  }
   .form-step .orbit-logo__img--full {
-    height: clamp(6rem, 24vw, 8.5rem);
-    max-width: min(26rem, 92vw);
+    height: clamp(3.75rem, 10dvh, 6rem);
+    max-width: min(24rem, 90vw);
   }
 
   /* Success */
@@ -1534,14 +1611,24 @@ body.page-qr {
   .orbit-step__num               { font-size: 2rem; min-width: 3rem; }
 
   /* ── Form: centred, wider ── */
-  .form-page   { padding: 0 0 3rem; margin-top: clamp(7rem, 28vh, 11rem); }
+  .form-page {
+    padding: 0;
+    margin: 0 auto;
+    max-height: 100%;
+  }
 
   .form-step .orbit-logo__img--full {
-    height: clamp(6.5rem, 12vw, 9.5rem);
-    max-width: min(28rem, 90vw);
+    height: clamp(4rem, 9dvh, 6.5rem);
+    max-width: min(26rem, 88vw);
+  }
+  .form-step .form-heading {
+    font-size: clamp(1.65rem, 3.8dvh, 2.2rem);
   }
   .form-heading { font-size: clamp(2rem, 2.8vw, 2.8rem); }
   .form-card   { padding: 2rem 2.25rem; }
+  .form-step .form-card {
+    padding: clamp(1.1rem, 2.2dvh, 1.5rem);
+  }
 
   /* ── Success ── */
   .success-stack { max-width: 34rem; gap: 1.5rem; }
