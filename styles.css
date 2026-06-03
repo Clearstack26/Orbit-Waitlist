@@ -1034,7 +1034,7 @@ body {
 .form-page {
   max-width: 32rem;
   width: 100%;
-  margin: clamp(3rem, 16vh, 5.5rem) auto 0;
+  margin: clamp(5rem, 26vh, 8.5rem) auto 0;
   padding-top: 0;
 }
 
@@ -1534,7 +1534,7 @@ body.page-qr {
   .orbit-step__num               { font-size: 2rem; min-width: 3rem; }
 
   /* ── Form: centred, wider ── */
-  .form-page   { padding: 0 0 3rem; margin-top: clamp(3.5rem, 14vh, 6rem); }
+  .form-page   { padding: 0 0 3rem; margin-top: clamp(5.5rem, 22vh, 9.5rem); }
 
   .form-step .orbit-logo__img--full {
     height: clamp(6.5rem, 12vw, 9.5rem);
