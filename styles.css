@@ -300,7 +300,8 @@ body {
 }
 
 .orbital-center--logo {
-  width: 34%;
+  width: 38%;
+  max-width: 5.5rem;
   height: auto;
   overflow: visible;
   padding: 0;
@@ -308,9 +309,12 @@ body {
 }
 
 .orbital-center--logo img {
+  display: block;
   width: 100%;
   height: auto;
+  max-height: 5.5rem;
   object-fit: contain;
+  object-position: center;
 }
 
 @keyframes ring-spin {
@@ -978,9 +982,15 @@ body {
 }
 
 .orbit-logo__img {
-  height: clamp(4.5rem, 22vw, 7rem);
+  display: block;
   width: auto;
   object-fit: contain;
+  object-position: center;
+}
+
+.orbit-logo__img--full {
+  height: clamp(2.25rem, 11vw, 3.25rem);
+  max-width: min(12rem, 72vw);
 }
 
 .form-heading {

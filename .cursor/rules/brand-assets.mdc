@@ -8,4 +8,6 @@ alwaysApply: true
 - **NEVER** generate, draw, recreate, or approximate the Orbit logo with code, canvas, AI image tools, or manual pixel manipulation.
 - **ONLY** use logo files provided by the user in `assets/` (e.g. `logo-mark-white-notext.png`, `logo-white.png`, `logo-black.png`, `logo-mark.png`).
 - For favicons and icons: resize the provided PNG with sharp (or reference it directly). Do not rebuild the mark from scratch or threshold/redraw pixels.
-- If a new size is needed, scale from the existing asset. If transparency is wrong, ask the user for an updated export — do not invent a replacement.
+- Do not compose new marketing images (OG cards, hero art, coloured backgrounds). Point `og:image` at `logo-black.png` or `logo-white.png` as supplied.
+- Light UI: `logo-black.png` / `logo-mark.png`. Dark UI only: `logo-white.png` / `logo-mark-white-notext.png`.
+- If a new size is needed, scale from the existing asset. If transparency is wrong, ask the user for an updated export. Do not invent a replacement.
