@@ -1034,7 +1034,7 @@ body {
 .form-page {
   max-width: 32rem;
   width: 100%;
-  margin: clamp(5rem, 26vh, 8.5rem) auto 0;
+  margin: clamp(6.5rem, 34vh, 10.5rem) auto 0;
   padding-top: 0;
 }
 
@@ -1048,7 +1048,7 @@ body {
 
 .form-step .orbit-logo {
   margin-top: 0;
-  margin-bottom: clamp(0.5rem, 1.5vh, 0.85rem);
+  margin-bottom: clamp(0.25rem, 0.65vh, 0.45rem);
 }
 
 .orbit-logo__img {
@@ -1534,7 +1534,7 @@ body.page-qr {
   .orbit-step__num               { font-size: 2rem; min-width: 3rem; }
 
   /* ── Form: centred, wider ── */
-  .form-page   { padding: 0 0 3rem; margin-top: clamp(5.5rem, 22vh, 9.5rem); }
+  .form-page   { padding: 0 0 3rem; margin-top: clamp(7rem, 28vh, 11rem); }
 
   .form-step .orbit-logo__img--full {
     height: clamp(6.5rem, 12vw, 9.5rem);
