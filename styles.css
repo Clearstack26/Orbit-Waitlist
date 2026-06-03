@@ -48,6 +48,7 @@ html {
   overflow: hidden;
   overscroll-behavior: none;
   height: 100%;
+  background-color: #000000;
 }
 
 @media (prefers-reduced-motion: reduce) {

@@ -4,7 +4,7 @@
   "description": "Join the Orbit waitlist. Be first to know when we launch.",
   "start_url": "/join",
   "display": "browser",
-  "background_color": "#F2F2F7",
+  "background_color": "#000000",
   "theme_color": "#000000",
   "orientation": "portrait",
   "icons": [
