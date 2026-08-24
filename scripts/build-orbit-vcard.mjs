@@ -36,7 +36,7 @@ export function buildOrbitWaitlistVCard(cfg) {
   const org = escapeVCardValue(cfg.name || "Orbit");
   const note = escapeVCardValue(
     cfg.vcardNote ||
-      "Join the Orbit waitlist for early access on iOS and Android. Open the link to sign up."
+      "Join the Orbit waitlist for early access on iOS. Open the link to sign up."
   );
 
   const lines = [
