@@ -1,13 +1,14 @@
 /* Orbit Waitlist — light theme (app parity) */
 
 :root {
+  /* App brand primary: cool near-black (#0A0B12) — Flutter Orbit fg/primary */
   --orbit-bg: #F2F2F7;
   --orbit-fg: #0A0B12;
   --orbit-body: #374151;
   --orbit-muted: #5B6270;
-  --orbit-primary: #7C6FF7;
-  --orbit-accent: #A78BFA;
-  --orbit-primary3: #5B51C8;
+  --orbit-primary: #0A0B12;
+  --orbit-accent: #1A1C24;
+  --orbit-primary3: #2A2D38;
   --orbit-cyan: #00D4FF;
   --orbit-success: #22C55E;
   --orbit-destructive: #E0442A;
@@ -15,9 +16,9 @@
   --orbit-glass-blur: 24px;
   --orbit-card-radius: 22px;
   --orbit-cta-radius: 15px;
-  --orbit-cta-shadow: 0 8px 24px rgba(124, 111, 247, 0.35);
-  --orbit-primary-grad: linear-gradient(135deg, #A78BFA 0%, #7C6FF7 100%);
-  --orbit-pill-border: linear-gradient(90deg, #00D4FF, #7C6FF7, #A78BFA);
+  --orbit-cta-shadow: 0 8px 24px rgba(10, 11, 18, 0.28);
+  --orbit-primary-grad: linear-gradient(135deg, #1A1C24 0%, #0A0B12 100%);
+  --orbit-pill-border: linear-gradient(90deg, #00D4FF, #0A0B12, #2A2D38);
 
   --bg: var(--orbit-bg);
   --bg-card: var(--orbit-glass-fill);
@@ -28,7 +29,7 @@
   --purple: var(--orbit-primary);
   --purple-mid: var(--orbit-accent);
   --purple-deep: var(--orbit-primary3);
-  --purple-glow: rgba(124, 111, 247, 0.22);
+  --purple-glow: rgba(10, 11, 18, 0.18);
   --border: rgba(0, 0, 0, 0.08);
   --radius-lg: var(--orbit-card-radius);
   --radius-sm: 14px;
@@ -39,7 +40,7 @@
   --maxw: 30rem;
   --shadow-card:
     0 1px 2px rgba(0, 0, 0, 0.04),
-    0 12px 40px rgba(124, 111, 247, 0.08);
+    0 12px 40px rgba(10, 11, 18, 0.08);
 }
 
 *, *::before, *::after { box-sizing: border-box; }
@@ -95,7 +96,7 @@ body {
   height: min(70vw, 420px);
   top: -8%;
   left: -12%;
-  background: rgba(124, 111, 247, 0.14);
+  background: rgba(10, 11, 18, 0.06);
   animation: blob-drift-a 20s ease-in-out infinite;
 }
 
@@ -104,7 +105,7 @@ body {
   height: min(55vw, 340px);
   top: 38%;
   right: -18%;
-  background: rgba(167, 139, 250, 0.12);
+  background: rgba(26, 28, 36, 0.05);
   animation: blob-drift-b 22s ease-in-out infinite;
 }
 
@@ -113,7 +114,7 @@ body {
   height: min(50vw, 300px);
   bottom: 8%;
   left: 10%;
-  background: rgba(91, 81, 200, 0.1);
+  background: rgba(42, 45, 56, 0.05);
   animation: blob-drift-c 24s ease-in-out infinite;
 }
 
@@ -122,7 +123,7 @@ body {
   height: min(40vw, 240px);
   bottom: 22%;
   right: 8%;
-  background: rgba(0, 212, 255, 0.09);
+  background: rgba(0, 212, 255, 0.06);
   animation: blob-drift-d 18s ease-in-out infinite;
 }
 
@@ -230,11 +231,11 @@ body {
   transform: translate(-50%, -50%);
 }
 
-/* Ring strokes + speeds: OrbitRingsAnimation (10s cycle, 8°/5°/3° per second on rings) */
+/* Ring strokes: Orbit splash — cool charcoal on light canvas */
 .ring-outer {
   width: 100%;
   height: 100%;
-  border: 2.25px solid rgba(124, 111, 247, 0.62);
+  border: 2.25px solid rgba(10, 11, 18, 0.28);
   box-shadow: none;
   animation: ring-spin 45s linear infinite;
 }
@@ -242,7 +243,7 @@ body {
 .ring-mid {
   width: 73.6%;
   height: 73.6%;
-  border: 2.75px solid rgba(91, 81, 200, 0.78);
+  border: 2.75px solid rgba(10, 11, 18, 0.22);
   box-shadow: none;
   animation: ring-spin 72s linear infinite reverse;
 }
@@ -250,7 +251,7 @@ body {
 .ring-inner {
   width: 47.2%;
   height: 47.2%;
-  border: 2.25px solid rgba(91, 81, 200, 0.58);
+  border: 2.25px solid rgba(10, 11, 18, 0.18);
   box-shadow: none;
   animation: ring-spin 120s linear infinite;
 }
@@ -290,13 +291,14 @@ body {
   margin-left: -4px;
 }
 
+/* All three splash dots: app primary cool black (#0A0B12) */
 .dot-outer {
   width: 10px;
   height: 10px;
   top: -5px;
   margin-left: -5px;
-  background: var(--orbit-accent);
-  box-shadow: 0 0 12px rgba(167, 139, 250, 0.75);
+  background: var(--orbit-primary);
+  box-shadow: 0 0 10px rgba(10, 11, 18, 0.28);
 }
 
 .dot-mid {
@@ -304,8 +306,8 @@ body {
   height: 8px;
   top: -4px;
   margin-left: -4px;
-  background: var(--orbit-cyan);
-  box-shadow: 0 0 12px rgba(0, 212, 255, 0.65);
+  background: var(--orbit-primary);
+  box-shadow: 0 0 10px rgba(10, 11, 18, 0.28);
 }
 
 .dot-inner {
@@ -313,8 +315,8 @@ body {
   height: 8px;
   top: -4px;
   margin-left: -4px;
-  background: var(--orbit-primary3);
-  box-shadow: 0 0 10px rgba(91, 81, 200, 0.55);
+  background: var(--orbit-primary);
+  box-shadow: 0 0 10px rgba(10, 11, 18, 0.28);
 }
 
 .orbital-center {
@@ -464,7 +466,7 @@ body {
   -webkit-backdrop-filter: blur(16px);
   border-radius: 999px;
   border: 1px solid rgba(255, 255, 255, 0.85);
-  box-shadow: 0 2px 8px rgba(124, 111, 247, 0.08), 0 1px 3px rgba(0, 0, 0, 0.05);
+  box-shadow: 0 2px 8px rgba(10, 11, 18, 0.08), 0 1px 3px rgba(0, 0, 0, 0.05);
   white-space: nowrap;
   pointer-events: auto;
 }
@@ -504,7 +506,7 @@ body {
 .btn-submit:hover:not(:disabled),
 .btn-continue--cta:hover {
   transform: translateY(-1px);
-  box-shadow: 0 10px 28px rgba(124, 111, 247, 0.42);
+  box-shadow: 0 10px 28px rgba(10, 11, 18, 0.32);
 }
 .btn-enter:active,
 .btn-submit:active,
@@ -541,7 +543,7 @@ body {
 
 @keyframes cta-pulse {
   0%, 100% { box-shadow: var(--orbit-cta-shadow); }
-  50% { box-shadow: 0 10px 32px rgba(124, 111, 247, 0.45); }
+  50% { box-shadow: 0 10px 32px rgba(10, 11, 18, 0.35); }
 }
 
 @keyframes orbital-entrance {
@@ -640,7 +642,7 @@ body {
 .progress-dot {
   height: 4px;
   border-radius: 99px;
-  background: rgba(124, 111, 247, 0.2);
+  background: rgba(10, 11, 18, 0.18);
   transition: width 0.3s ease, background 0.3s ease;
   width: 14px;
   flex-shrink: 0;
@@ -677,7 +679,7 @@ body {
 .btn-continue:hover {
   transform: translateY(-1px);
   background: rgba(255, 255, 255, 0.9);
-  box-shadow: 0 4px 12px rgba(124, 111, 247, 0.12);
+  box-shadow: 0 4px 12px rgba(10, 11, 18, 0.1);
 }
 .btn-continue:active { transform: translateY(0); }
 .btn-continue svg { width: 0.9rem; height: 0.9rem; }
@@ -1210,7 +1212,7 @@ body {
   -webkit-backdrop-filter: blur(var(--orbit-glass-blur));
   border: 1.5px solid rgba(255, 255, 255, 0.55);
   box-shadow:
-    0 0 0 1px rgba(124, 111, 247, 0.12),
+    0 0 0 1px rgba(10, 11, 18, 0.08),
     var(--shadow-card);
   border-radius: var(--orbit-card-radius);
   padding: clamp(1.5rem, 4.5vw, 2rem);
@@ -1256,8 +1258,8 @@ body {
 }
 .form-input::placeholder, .form-textarea::placeholder { color: var(--ink-placeholder); }
 .form-input:focus, .form-textarea:focus {
-  border-color: rgba(124, 111, 247, 0.55);
-  box-shadow: 0 0 0 1.5px rgba(124, 111, 247, 0.55);
+  border-color: rgba(10, 11, 18, 0.45);
+  box-shadow: 0 0 0 1.5px rgba(10, 11, 18, 0.35);
 }
 .form-input.is-error {
   border-color: rgba(224, 68, 42, 0.55);
