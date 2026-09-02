@@ -2,7 +2,7 @@
   "baseUrl": "https://orbitwaitlist.au",
   "joinPath": "/join",
   "name": "Orbit",
-  "tagline": "Coming soon.",
+  "tagline": "Capture who you meet. Follow up at the right time.",
   "supabase": {
     "url": "https://ghmgbdpdetnkbjhoheqf.supabase.co",
     "anonKey": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImdobWdiZHBkZXRua2JqaG9oZXFmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODAwMjM3MDUsImV4cCI6MjA5NTU5OTcwNX0.D2h01s11AJapn9lJmrE-OFayOtcmXN_T2dcxRD4aGVs"
